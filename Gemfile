@@ -18,7 +18,6 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 gem 'finnhub_ruby', '~> 2.0', '>= 2.0.1'
-gem 'rspec', '~> 3.13', '>= 3.13.1'
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -52,6 +51,7 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem "rspec-rails"
 end
 
 group :development do
