@@ -38,7 +38,14 @@ RSpec.describe Transaction, type: :model do
       expect(@wallet.balance.format).to eq("₱0.00") 
     end
 
-    it "creates a transaction" do
+    it "cannot buy a share below 0" do
+      wallet = Wallet.new(balance: Money.from_cents(0,"PHP"), user: @user)
+      transaction = Transaction.new(wallet: @wallet, transaction_type: 0, share_amount: 100, price: Money.from_cents(100,"PHP") )
+      transaction.buy(Money.from_cents(100, "PHP"))
+      expect(wallet.balance.format).to eq("₱0.00") 
+    end
+
+    it "sells a share" do
       transaction = Transaction.new(wallet: @wallet, transaction_type: 1, share_amount: 100, price: Money.from_cents(50,"PHP") )
       transaction.sell(Money.from_cents(500, "PHP"))
       expect(@wallet.balance.format).to eq("₱5.00") 
