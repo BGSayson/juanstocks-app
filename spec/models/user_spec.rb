@@ -4,6 +4,8 @@ RSpec.describe User, type: :model do
   # pending "add some examples to (or delete) #{__FILE__}"
   before :all do
     @user = User.new(email: "test_one@test.com", password: "test_one_password", first_name:"Bien", last_name:"Sayson", user_status: 1, user_role: 1)
+    Money.rounding_mode = BigDecimal::ROUND_HALF_UP
+    Money.locale_backend = nil
   end
 
   context "initial test" do
@@ -49,6 +51,14 @@ RSpec.describe User, type: :model do
       # expect(@user.user_role).to eq(1)
       expect(@user.user_role_before_type_cast).to eq(1)
       expect(@user.admin?).to eq(true)
+    end
+  end
+
+  context "associations" do
+    it "has one wallet" do
+      wallet = Wallet.new(balance: Money.from_cents(100,"PHP"), user: @user)
+      expect(@user.wallet.balance.format).to eq("₱1.00")
+      expect(wallet.user).to eq(@user)
     end
   end
 end

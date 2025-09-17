@@ -9,4 +9,6 @@ class User < ApplicationRecord
   
   enum :user_status, {pending: 0, approved: 1, deactivated: 2}
   enum :user_role, {trader: 0, admin: 1 }
+
+  has_one :wallet
 end
