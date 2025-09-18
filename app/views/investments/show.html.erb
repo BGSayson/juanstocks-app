@@ -1,0 +1,5 @@
+<h1>Show First Investment</h1>
+<p><%= @investment.total_share_amount %><p>
+<p><%= @investment.buying_price.format %><p>
+
+<%= button_to 'Back to Investments', wallet_investments_path(@wallet.id), :method => "get" %>
