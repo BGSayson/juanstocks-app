@@ -14,14 +14,12 @@ class ApplicationController < ActionController::Base
 
 
   def after_sign_in_path_for(resource)
-    # if current_user.user_role == :admin
-    #   @admin = User.find(params[:id])
-    #   redirect_to admins_path
-    # else
-    #   redirect_to dashboard_path
-    # end 
-    dashboard_path
-
+    if current_user.user_role == "admin"
+      @admin = User.find(params[:id])
+      admins_path
+    else
+      dashboard_path
+    end 
   end
 
   def after_sign_up_path_for(resource)
