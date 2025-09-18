@@ -18,7 +18,6 @@ class ApplicationController < ActionController::Base
       @admin = User.find(params[:id])
       admins_path
     else
-      p "BIEN WAS HERE YOU SUCK"
       dashboard_path
     end 
   end
