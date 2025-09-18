@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   
   root "welcome#index"
+  get "dashboard" => "dashboard#index", as: :dashboard
   
   devise_for :users, controllers: {
     registrations: "users/registrations",
