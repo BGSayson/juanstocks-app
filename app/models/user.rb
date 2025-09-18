@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   
   enum :user_status, {pending: 0, approved: 1, deactivated: 2}
-  enum :user_role, {trader: 0, admin: 1 }
+  enum :user_role, {buyer: 0, admin: 1, broker: 2 }
 
   has_one :wallet
 end
