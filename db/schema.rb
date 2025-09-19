@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_17_094156) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_19_121838) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -18,7 +18,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_094156) do
     t.bigint "wallet_id", null: false
     t.integer "total_share_amount", null: false
     t.integer "buying_price_cents", default: 0, null: false
-    t.string "buying_price_currency", default: "USD", null: false
+    t.string "buying_price_currency", default: "PHP", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["wallet_id"], name: "index_investments_on_wallet_id"
@@ -29,7 +29,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_094156) do
     t.integer "transaction_type", default: 0
     t.integer "share_amount"
     t.integer "price_cents", default: 0, null: false
-    t.string "price_currency", default: "USD", null: false
+    t.string "price_currency", default: "PHP", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["wallet_id"], name: "index_transactions_on_wallet_id"

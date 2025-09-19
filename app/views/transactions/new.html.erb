@@ -1,0 +1,31 @@
+<div>
+<%= form_with model: [@wallet, @wallet.transactions.build], local: true do |f| %>
+  <p>
+    <%= f.label :transaction_type %> <br/>
+    <%= f.select :transaction_type, 
+      [["Buy", "buy"], 
+      ["Sell", "sell"],
+      ["Withdraw", "withdraw"],
+      ["Deposit","deposit"]], 
+      selected: 3 %>
+  </p>
+
+  <p> <%# show if transaction_type is buy or sell %>
+    <%# partial for buy and sell transaction type %>
+    <%= f.label :share_amount %> <br/>
+    <%= f.text_field :share_amount %>
+  </p>
+
+  <p> <%# show if transaction_type is withdraw or deposit %>
+    <%# partial for withdraw or deposit %>
+    <%= f.label :price %> <br/>
+    <%= f.text_field :price %>
+  </p>
+
+  <p>
+    <%= f.submit 'Create Transaction' %>
+  </p>
+<% end %>
+
+<%= button_to 'Back', wallet_path(@wallet.id), :method => "get" %>
+</div>

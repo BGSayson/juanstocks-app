@@ -2,6 +2,4 @@
 <p><%= @wallet.balance.format %></p>
 <p><%= @transactions.count %></p>
 
-<%= button_to 'Edit Wallet', edit_wallet_path(@wallet.id), :method => "get" %>
-<%= button_to 'Show Investments', wallet_investments_path(@wallet.id), :method => "get" %>
-<%= button_to 'Show Transactions', wallet_transactions_path(@wallet.id), :method => "get" %>
+<%= button_to 'New Transaction', new_wallet_transaction_path(@wallet.id), :method => "get" %>
