@@ -1,3 +1,7 @@
 JuanStocks by Juan Tamad
 
 <%= button_to "Enter", new_user_session_path, method: :get%>
+
+<% if user_signed_in? %>
+<%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+<% end %>
