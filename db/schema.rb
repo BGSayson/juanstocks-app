@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_17_094156) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_20_040845) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -18,10 +18,31 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_094156) do
     t.bigint "wallet_id", null: false
     t.integer "total_share_amount", null: false
     t.integer "buying_price_cents", default: 0, null: false
-    t.string "buying_price_currency", default: "USD", null: false
+    t.string "buying_price_currency", default: "PHP", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["wallet_id"], name: "index_investments_on_wallet_id"
+  end
+
+  create_table "stocks", force: :cascade do |t|
+    t.string "currency"
+    t.string "description"
+    t.string "display_symbol"
+    t.string "symbol"
+    t.integer "current_price_cents", default: 0, null: false
+    t.string "current_price_currency", default: "USD", null: false
+    t.float "change"
+    t.float "percent_change"
+    t.integer "high_price_of_the_day_cents", default: 0, null: false
+    t.string "high_price_of_the_day_currency", default: "USD", null: false
+    t.integer "low_price_of_the_day_cents", default: 0, null: false
+    t.string "low_price_of_the_day_currency", default: "USD", null: false
+    t.integer "open_price_of_the_day_cents", default: 0, null: false
+    t.string "open_price_of_the_day_currency", default: "USD", null: false
+    t.integer "previous_close_price_cents", default: 0, null: false
+    t.string "previous_close_price_currency", default: "USD", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -29,9 +50,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_094156) do
     t.integer "transaction_type", default: 0
     t.integer "share_amount"
     t.integer "price_cents", default: 0, null: false
-    t.string "price_currency", default: "USD", null: false
+    t.string "price_currency", default: "PHP", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stock_symbol"
     t.index ["wallet_id"], name: "index_transactions_on_wallet_id"
   end
 
@@ -61,6 +83,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_094156) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "usd_exchange_rate"
   end
 
   add_foreign_key "investments", "wallets"

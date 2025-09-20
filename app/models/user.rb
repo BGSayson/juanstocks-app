@@ -11,4 +11,22 @@ class User < ApplicationRecord
   enum :user_role, {buyer: 0, admin: 1, broker: 2 }
 
   has_one :wallet
+
+  # get an api key from this site https://app.exchangerate-api.com/dashboard
+
+  after_save :create_wallet
+
+  private
+  def create_wallet
+    opexr_fetch_response = HTTParty.get("https://v6.exchangerate-api.com/v6/#{ENV["OPEXRATES_API_KEY"]}/pair/USD/PHP")
+    if opexr_fetch_response['result'] == "success"
+      opexr_usd_php_exchange_rate = opexr_fetch_response['conversion_rate']
+      Wallet.create!(
+        user: self,
+        balance: Money.new(0, 'PHP')
+        # usd_exchange_rate: #PUT FETCHED OBJECT HERE
+      )
+    # else raise UserError, "Unable to create wallet"
+    end
+  end
 end
