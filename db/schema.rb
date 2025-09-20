@@ -18,7 +18,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_040845) do
     t.bigint "wallet_id", null: false
     t.integer "total_share_amount", null: false
     t.integer "buying_price_cents", default: 0, null: false
-    t.string "buying_price_currency", default: "PHP", null: false
+    t.string "buying_price_currency", default: "USD", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["wallet_id"], name: "index_investments_on_wallet_id"
@@ -50,7 +50,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_040845) do
     t.integer "transaction_type", default: 0
     t.integer "share_amount"
     t.integer "price_cents", default: 0, null: false
-    t.string "price_currency", default: "PHP", null: false
+    t.string "price_currency", default: "USD", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "stock_symbol"

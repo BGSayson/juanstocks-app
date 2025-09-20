@@ -23,10 +23,10 @@ class User < ApplicationRecord
       opexr_usd_php_exchange_rate = opexr_fetch_response['conversion_rate']
       Wallet.create!(
         user: self,
-        balance: Money.new(0, 'PHP')
-        # usd_exchange_rate: #PUT FETCHED OBJECT HERE
+        balance: 0,
+        usd_exchange_rate: opexr_usd_php_exchange_rate
       )
-    # else raise UserError, "Unable to create wallet"
+    else raise StandardError, "Unable to fetch"
     end
   end
 end

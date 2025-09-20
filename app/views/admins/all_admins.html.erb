@@ -1,0 +1,26 @@
+<h1>All Juanstocks Admins</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>First_name</th>
+      <th>Last_name</th>
+      <th>Email</th>
+      <th>user_role</th>
+      <th>user_status</th>
+    </tr>
+
+      <tbody>
+  <% @admins.each do |admin| %>
+    <tr>
+      <td><%= admin.id %> </td>
+      <td><%= admin.first_name %> </td>
+      <td><%= admin.last_name %> </td>
+      <td><%= admin.email %> </td>
+      <td><%= admin.user_role %> </td>
+      <td><%= admin.user_status %> </td>
+    </tr>
+    <% end %>
+  </tbody>
+  </thead>

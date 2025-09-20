@@ -73,5 +73,6 @@ RSpec.configure do |config|
   # Needed for TDD when using Devise as per Devise docs
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
+  config.include FactoryBot::Syntax::Methods
 end
 
