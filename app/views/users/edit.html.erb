@@ -1,0 +1,5 @@
+<%= form_with scope: :user, url: user_path, method: :patch, local: true do |f| %>
+
+<%= render '/shared/users/form', f: f%>
+
+<% end %>

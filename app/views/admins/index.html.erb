@@ -1,3 +1,8 @@
+
 Hi admin <%= current_user.first_name%>
+
+<%= link_to "All Users", "all_users" %>
+<%= link_to "New User", new_admin_user_path(current_user) %>
+<%= link_to "All Admins", "all_admins" %>
 
 <%= button_to "Sign out", destroy_user_session_path, method: :delete  %>
