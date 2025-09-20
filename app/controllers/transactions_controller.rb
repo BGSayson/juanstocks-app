@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
   before_action :authenticate_user!
-  rescue_from StandardError, with: :redirect
+  rescue_from WalletError, with: :redirect
 
   def index
     if current_user_is_buyer_broker
