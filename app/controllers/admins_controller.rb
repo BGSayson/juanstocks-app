@@ -17,12 +17,37 @@ class AdminsController < ApplicationController
     end
   end
 
+  def all_pending_users
+    if is_user_admin
+      @users = User.where(user_status: :pending)
+    else
+      redirect_to dashboard_path, alert: "User is unauthorized"
+    end
+  end
+
   def all_admins
     if is_user_admin
       @admins = User.where(user_role: 'admin')
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end
+  end
+
+  def all_transactions
+    if is_user_admin
+      @transactions = Transaction.all
+    else
+      redirect_to dashboard_path, alert: "User is unauthorized"
+    end
+  end
+
+  def view_transaction
+    if is_user_admin
+      @transaction = Transaction.find(params[:id])
+    else
+      redirect_to dashboard_path, alert: "User is unauthorized"
+    end
+
   end
 
   def show

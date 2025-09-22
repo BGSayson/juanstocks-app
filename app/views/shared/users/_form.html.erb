@@ -13,13 +13,16 @@
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
-    <div class="field flex flex-col items-start">
+
+<% if action_name == "new" %>
+  <div class="field flex flex-col items-start">
     <%= f.label "Password:", class: "text-[1.5rem]" %>
     <% if @minimum_password_length %>
     <em>(8 characters minimum and must include: 1 uppercase, 1 lowercase, 1 digit and 1 special character)</em>
     <% end %>
     <%= f.password_field :password, autocomplete: "new-password", class: "border-[2px] rounded-[4px]" %>
   </div>
+  <% end %>
 
   <div>
     <%= f.label :user_role %>
