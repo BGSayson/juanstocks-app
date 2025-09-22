@@ -19,6 +19,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def all_pending_users
+    if is_user_admin
+      @users = User.where()
+    else
+      redirect_to dashboard_path, alert: "User is unauthorized"
+    end
+  end
+
   def confirm_user
     if is_user_admin
       @user = User.find(params[:id])

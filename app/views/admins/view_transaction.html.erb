@@ -1,0 +1,27 @@
+<h1>Transaction details #: <%= @transaction.id %> </div>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Wallet ID</th>
+      <th>Transaction Type</th>
+      <th>Share amount</th>
+      <th>Price</th>
+      <th>Currency</th>
+      <th>Stock Symbol</th>
+      <th>Date and time of transaction</th>
+    </tr>
+
+    <tbody>
+        <tr>
+          <td><%= @transaction.id %> </td>
+          <td><%= @transaction.wallet_id %> </td>
+          <td><%= @transaction.transaction_type %> </td>
+          <td><%= @transaction.share_amount %> </td>
+          <td><%= @transaction.price_cents %> </td>
+          <td><%= @transaction.price_currency %> </td>
+          <td><%= @transaction.stock_symbol %> </td>
+          <td><%= @transaction.created_at.localtime.to_formatted_s(:long) %> </td>
+        </tr>
+    </tbody>
+</table>
