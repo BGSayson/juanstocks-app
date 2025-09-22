@@ -24,6 +24,12 @@ Rails.application.routes.draw do
     resources :users
   end
 
+  # Extra admin paths
+  get "/all_users" => "admins#all_users"
+  get "/all_pending_users" => "admins#all_pending_users"
+  get "/all_admins" => "admins#all_admins"
+  get "/all_transactions" => "admins#all_transactions"
+  get "/view_transaction/:id" => "admins#view_transaction", as: "view_transaction"
   post "/users/:id" => "users#confirm_user", as: "confirm_user"
   
   resources :wallets, shallow: true do
@@ -31,7 +37,5 @@ Rails.application.routes.draw do
     resources :investments
   end
 
-  get "/all_users" => "admins#all_users"
-  get "/all_admins" => "admins#all_admins"
 
 end

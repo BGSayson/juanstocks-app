@@ -1,0 +1,31 @@
+
+<h1>All Transactions</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Wallet ID</th>
+      <th>Transaction Type</th>
+      <th>Share amount</th>
+      <th>Price</th>
+      <th>Currency</th>
+      <th>Stock Symbol</th>
+      <th>Date and time of transaction</th>
+    </tr>
+
+    <tbody>
+      <% @transactions.each do |tx| %>
+        <tr>
+          <td><%= tx.id %> </td>
+          <td><%= tx.wallet_id %> </td>
+          <td><%= tx.transaction_type %> </td>
+          <td><%= tx.share_amount %> </td>
+          <td><%= tx.price_cents %> </td>
+          <td><%= tx.price_currency %> </td>
+          <td><%= tx.stock_symbol %> </td>
+          <td><%= tx.created_at.localtime.to_formatted_s(:long) %> </td>
+          <td><%= link_to 'Show', view_transaction_path(tx.id) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </thead>
