@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   
   root "welcome#index"
   get "dashboard" => "dashboard#index", as: :dashboard
-  
+
   devise_for :users, controllers: {
     registrations: "users/registrations",
     sessions: "users/sessions"
@@ -23,9 +23,15 @@ Rails.application.routes.draw do
   resources :admins, shallow: true do
     resources :users
   end
+
+  post "/users/:id" => "users#confirm_user", as: "confirm_user"
   
   resources :wallets, shallow: true do
     resources :transactions
     resources :investments
   end
+
+  get "/all_users" => "admins#all_users"
+  get "/all_admins" => "admins#all_admins"
+
 end

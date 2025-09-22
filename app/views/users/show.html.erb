@@ -1,0 +1,33 @@
+<h1>User details of: <%= @user.first_name %> <%= @user.last_name %></h1> <div> <%= link_to "Back to Users", all_users_path %> </div>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>User role</th>
+      <th>User status</th>
+      <th>Date and time email was confirmed</th>
+      <% if @user.confirmed_at == nil%>
+      <th> Confirm email?</th>
+      <% end %>
+      <th><%= link_to "Edit user details here", edit_user_path(@user) %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td><%= @user.id %> </td>
+      <td><%= @user.first_name %> </td>
+      <td><%= @user.last_name %> </td>
+      <td><%= @user.user_role %> </td>
+      <td><%= @user.user_status %> </td>
+      <% if @user.confirmed_at == nil   %>
+      <td> Account not confirmed </td>
+      <td> <%= button_to "Confirm email", confirm_user_path, method: :post %> </td>
+      <% else %>
+      <td><%= @user.confirmed_at %> </td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
