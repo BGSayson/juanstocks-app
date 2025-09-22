@@ -5,6 +5,9 @@ class Wallet < ApplicationRecord
   has_many :investments
 
   def withdraw(amount)
+    puts "LOOK RIGHT NOW!!!"
+    puts "self.balance: #{self.balance}"
+    puts "amount : #{amount}"
     if self.balance >= amount
       self.balance = self.balance - amount
     end
@@ -17,9 +20,9 @@ class Wallet < ApplicationRecord
   end
 
   def add_investment(share_amount, stock_symbol)
-    stock_data = Stock.find_by symbol: stock_symbol
+    stock_data = Stock.find_by(symbol: stock_symbol)
     stock_price = stock_data.current_price
-    self.investments.create(total_share_amount: share_amount, buying_price: stock_price, stock: stock_data)
+    investment = self.investments.create(total_share_amount: share_amount, buying_price: stock_price, stock_id: stock_data.id)
     price = share_amount * stock_price * self.usd_exchange_rate
     return Money.new(price, 'PHP')
   end
@@ -41,7 +44,7 @@ class Wallet < ApplicationRecord
   end
 
   def balance_is_negative
-    if self.balance > 0
+    if self.balance < 0
       return true
     else
       return false

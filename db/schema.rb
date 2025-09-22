@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_22_131239) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_22_135346) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -21,6 +21,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_22_131239) do
     t.string "buying_price_currency", default: "PHP", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "stock_id"
+    t.index ["stock_id"], name: "index_investments_on_stock_id"
     t.index ["wallet_id"], name: "index_investments_on_wallet_id"
   end
 
@@ -87,6 +89,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_22_131239) do
     t.float "usd_exchange_rate"
   end
 
+  add_foreign_key "investments", "stocks"
   add_foreign_key "investments", "wallets"
   add_foreign_key "transactions", "investments"
   add_foreign_key "transactions", "wallets"

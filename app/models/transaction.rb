@@ -26,17 +26,15 @@ class Transaction < ApplicationRecord
 
     case self.transaction_type
     when "buy"
-      if self.wallet.balance_is_negative
-        new_balance = self.buy(self.share_amount, self.stock_symbol)
-      else
+      new_balance = self.buy(self.share_amount, self.stock_symbol)
+      if self.wallet.balance_is_negative || new_balance < 0
         raise WalletError, "Balance cannot be less than or equal to zero"
       end
     when "sell"
       new_balance = self.sell(self.investment_id, self.share_amount, self.stock_symbol)
     when "withdraw"
-      if self.wallet.balance_is_negative
-        new_balance = self.wallet.withdraw(self.price)
-      else
+      new_balance = self.wallet.withdraw(self.price)
+      if self.wallet.balance_is_negative || new_balance < 0
         raise WalletError, "Balance cannot be less than or equal to zero"
       end
     when "deposit"
