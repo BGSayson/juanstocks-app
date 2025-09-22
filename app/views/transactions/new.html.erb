@@ -10,13 +10,23 @@
       selected: 3 %>
   </p>
 
-  <p> <%# show if transaction_type is buy or sell %>
-    <%# partial for buy and sell transaction type %>
+  <%# show if transaction_type is buy or sell %>
+  <p>
     <%= f.label :share_amount %> <br/>
-    <%= f.text_field :share_amount %>
+    <%= f.number_field :share_amount, in: 1..20, step: 1 %>
   </p>
 
-  <p> <%# show if transaction_type is withdraw or deposit %>
+  <p>
+    <%= f.label :stock_symbol %> <br/>
+    <%= f.select :stock_symbol, options_from_collection_for_select(Stock.all, :symbol, :description) %>
+  </p>
+
+  <p>
+    <%= f.label :investment_id %> <br/>
+    <%= f.select :investment_id, options_from_collection_for_select(@wallet.investments, :id, :total_share_amount) %>
+  </p>
+
+  <p> <%# allow client editing if transaction_type is withdraw or deposit %>
     <%# partial for withdraw or deposit %>
     <%= f.label :price %> <br/>
     <%= f.text_field :price %>

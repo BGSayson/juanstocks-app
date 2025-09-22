@@ -1,5 +1,5 @@
 class WalletError < StandardError
 end
 
-class InvesmentError < StandardError
+class InvestmentError < StandardError
 end

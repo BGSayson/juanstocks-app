@@ -14,7 +14,7 @@ class User < ApplicationRecord
 
   # get an api key from this site https://app.exchangerate-api.com/dashboard
 
-  after_save :create_wallet
+  after_create :create_wallet
 
   private
   def create_wallet

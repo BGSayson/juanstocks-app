@@ -3,17 +3,19 @@ class Transaction < ApplicationRecord
   monetize :price_cents
 
   enum :transaction_type, {buy: 0, sell: 1, withdraw: 2, deposit: 3}
+  
+  after_create :update_wallet
 
-  after_save :update_wallet
-
-  def buy(buy_price)
+  def buy(share_amount, stock_symbol)
     # add investment
+    buy_price = self.wallet.add_investment(share_amount, stock_symbol)
     new_balance = self.wallet.withdraw(buy_price)
     return new_balance
   end
 
-  def sell(sell_price)
+  def sell(share_amount, stock_symbol)
     # remove investment 
+    sell_price = self.wallet.remove_investment(share_amount, stock_symbol)
     new_balance = self.wallet.deposit(sell_price)
     return new_balance
   end
@@ -25,12 +27,12 @@ class Transaction < ApplicationRecord
     case self.transaction_type
     when "buy"
       if self.wallet.balance_is_negative
-        new_balance = self.buy(self.share_amount, self.stock, self.price)
+        new_balance = self.buy(self.share_amount, self.stock_symbol)
       else
         raise WalletError, "Balance cannot be less than or equal to zero"
       end
     when "sell"
-      new_balance = self.sell(self.share_amount, self.stock, self.price)
+      new_balance = self.sell(self.investment_id, self.share_amount, self.stock_symbol)
     when "withdraw"
       if self.wallet.balance_is_negative
         new_balance = self.wallet.withdraw(self.price)
@@ -38,7 +40,11 @@ class Transaction < ApplicationRecord
         raise WalletError, "Balance cannot be less than or equal to zero"
       end
     when "deposit"
-      new_balance = self.wallet.deposit(self.price)
+      if self.price > 0
+        new_balance = self.wallet.deposit(self.price)
+      else
+        raise WalletError, "Cannot deposit negative amounts"
+      end
     end
 
     self.wallet.update!(
