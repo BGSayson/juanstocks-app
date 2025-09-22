@@ -45,7 +45,7 @@ RSpec.describe User, type: :model do
     it "has a valid user status" do
       # expect(@user.user_status).to eq(1)
       expect(@user.user_status_before_type_cast).to eq(1)
-      expect(@user.approved?).to eq(true)
+      expect(@user.buyer_broker?).to eq(true)
     end
     it "has a valid user role" do
       # expect(@user.user_role).to eq(1)
