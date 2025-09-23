@@ -31,6 +31,13 @@ gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
 
+# Used for active jobs instead of solid cache
+gem 'redis', '~> 5.4', '>= 5.4.1'
+gem 'redis-client', '~> 0.25.3'
+
+# Gem to run Active Jobs concurrenntly or properly queue them by using Sidekiq as the Active Job Adapter
+gem 'sidekiq'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 

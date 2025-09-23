@@ -28,4 +28,12 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     root_path # your path
   end
+
+  # Active Jobs
+  OpenexchangerateJob.perform_later
+  # FinnhubJob.perform_later
+
+  # Sidekiq 
+  # ExchangeRateJob.perform_async
+  # FinnhubSidekiqJob.perform_async
 end

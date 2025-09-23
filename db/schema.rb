@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_20_040845) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_23_023347) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -21,6 +21,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_040845) do
     t.string "buying_price_currency", default: "PHP", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "stock_id"
+    t.index ["stock_id"], name: "index_investments_on_stock_id"
     t.index ["wallet_id"], name: "index_investments_on_wallet_id"
   end
 
@@ -54,6 +56,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_040845) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "stock_symbol"
+    t.integer "investment_id"
     t.index ["wallet_id"], name: "index_transactions_on_wallet_id"
   end
 
@@ -79,13 +82,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_040845) do
 
   create_table "wallets", force: :cascade do |t|
     t.integer "balance_cents", default: 0, null: false
-    t.string "balance_currency", default: "USD", null: false
+    t.string "balance_currency", default: "PHP", null: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "usd_exchange_rate"
   end
 
+  add_foreign_key "investments", "stocks"
   add_foreign_key "investments", "wallets"
+  add_foreign_key "transactions", "investments", on_delete: :nullify
   add_foreign_key "transactions", "wallets"
 end

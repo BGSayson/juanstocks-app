@@ -12,21 +12,13 @@ class User < ApplicationRecord
 
   has_one :wallet
 
-  # get an api key from this site https://app.exchangerate-api.com/dashboard
-
-  after_save :create_wallet
+  after_create :create_wallet
 
   private
   def create_wallet
-    opexr_fetch_response = HTTParty.get("https://v6.exchangerate-api.com/v6/#{ENV["OPEXRATES_API_KEY"]}/pair/USD/PHP")
-    if opexr_fetch_response['result'] == "success"
-      opexr_usd_php_exchange_rate = opexr_fetch_response['conversion_rate']
-      Wallet.create!(
-        user: self,
-        balance: 0,
-        usd_exchange_rate: opexr_usd_php_exchange_rate
-      )
-    else raise StandardError, "Unable to fetch"
-    end
+    Wallet.create!(
+      user: self,
+      balance: 0,
+    )
   end
 end

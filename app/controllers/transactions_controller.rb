@@ -23,6 +23,8 @@ class TransactionsController < ApplicationController
     if current_user_is_buyer_broker
       @wallet = current_user.wallet
       @transaction = @wallet.transactions.build(transaction_params)
+      puts "LOOKIE HERE!!!"
+      puts transaction_params
 
       if @transaction.save
         redirect_to wallet_path(@wallet.id)
@@ -37,11 +39,11 @@ class TransactionsController < ApplicationController
 
   private
   def transaction_params
-    params.require(:transaction).permit(:transaction_type, :share_amount, :price)
+    params.require(:transaction).permit(:transaction_type, :share_amount, :price, :stock_symbol, :investment_id)
   end
 
   def current_user_is_buyer_broker
-    current_user.user_role == "buyer" || current_user.user_role == 'broker'
+    current_user.user_role != "admin"
   end
 
   def redirect

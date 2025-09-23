@@ -38,7 +38,7 @@ class WalletsController < ApplicationController
   end
 
   def current_user_is_buyer_broker
-    current_user.user_role == "buyer" || current_user.user_role == 'broker'
+    current_user.user_role != "admin"
   end
 
 end

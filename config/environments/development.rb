@@ -15,6 +15,7 @@ Rails.application.configure do
   # Enable server timing.
   config.server_timing = true
 
+
   # Enable/disable Action Controller caching. By default Action Controller caching is disabled.
   # Run rails dev:cache to toggle Action Controller caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
@@ -27,6 +28,10 @@ Rails.application.configure do
 
   # Change to :null_store to avoid any caching.
   config.cache_store = :memory_store
+
+  
+  # Redis
+  # config.cache_store = :redis_cache_store, { url: "redis://localhost:6379/1" }
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
