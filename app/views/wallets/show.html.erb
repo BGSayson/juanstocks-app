@@ -1,5 +1,53 @@
 <h1>Show Wallet</h1>
 <p><%= @wallet.balance.format %></p>
-<p><%= @transactions.count %></p>
+<h2>Transactions <%= @wallet.transactions.count %></h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Transaction Type</th>
+            <th>Stock Symbol</th>
+            <th>Share Amount</th>
+            <th>Investment ID</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+      <% @wallet.transactions.order(:id).each do |transaction| %>
+        <tr>
+          <td><%= transaction.id %></td>
+          <td><%= transaction.transaction_type %></td>
+          <td><%= transaction.stock_symbol %></td>
+          <td><%= transaction.share_amount %></td>
+          <td><%= transaction.investment_id %></td>
+          <td><%= transaction.price.format %></td>
+        </tr>
+      <% end %>
+    </tbody>
+</table>
+
+<h2>Investments</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Share Amount</th>
+            <th>Buying Price</th>
+            <th>Stock ID</th>
+            <th>Company Name</th>
+        </tr>
+    </thead>
+    <tbody>
+      <% @wallet.investments.each do |investment| %>
+        <tr>
+          <td><%= investment.id %></td>
+          <td><%= investment.total_share_amount %></td>
+          <td><%= investment.buying_price.format %></td>
+          <td><%= investment.stock_id %></td>
+          <td><%= Stock.find(investment.stock_id).description %></td>
+        </tr>
+      <% end %>
+    </tbody>
+</table>
 
 <%= button_to 'New Transaction', new_wallet_transaction_path(@wallet.id), :method => "get" %>

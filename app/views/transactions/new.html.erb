@@ -23,8 +23,8 @@
 
   <p>
     <%= f.label :investment_id %> <br/>
-    <%= f.text_field :investment_id %>
-    <%# f.select :investment_id, options_from_collection_for_select(@wallet.investments, :id, :total_share_amount) %>
+    <%# f.text_field :investment_id %>
+    <%= f.select :investment_id, options_from_collection_for_select(@wallet.investments, :id, :investment_display) %>
   </p>
 
   <p> <%# allow client editing if transaction_type is withdraw or deposit %>
