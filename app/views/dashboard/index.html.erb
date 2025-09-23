@@ -1,3 +1,8 @@
+<% if current_user.user_status == "buyer_only" %>
+
+<%# FOR BROKER APPLICATION %>
+<h1>Verify now to become a broker! 
+<% end %>
 Hello trader <%= current_user.first_name%>
 <%= button_to "Sign out", destroy_user_session_path, method: :delete  %>
 

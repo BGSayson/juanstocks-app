@@ -1,0 +1,37 @@
+<h1>Stonks</h1>
+<h2><%= @opexr_usd_php_exchange_rate %></h2>
+<% finnhub_client = FinnhubRuby::DefaultApi.new %>
+<%=  finnhub_client.quote('NVDA') %>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Symbol</th>
+      <th>Desc.</th>
+      <th>Price</th>
+      <th>Change</th>
+      <th>Percent Change</th>
+      <th>High Price of the Day</th>
+      <th>Low Price of the Day</th>
+      <th>Currency</th>
+      <th>Logo</th>
+    </tr>
+
+      <tbody>
+  <% @stocks.each do |stock| %>
+    <tr>
+      <td><%= stock.id %> </td>
+      <td><%= stock.symbol %> </td>
+      <td><%= stock.description %> </td>
+      <td><%= stock.current_price_cents %> </td>
+      <td><%= stock.change %> </td>
+      <td><%= stock.percent_change %> </td>
+      <td><%= stock.high_price_of_the_day_cents %> </td>
+      <td><%= stock.low_price_of_the_day_cents %> </td>
+      <td><%= stock.current_price_currency %> </td>
+      <td><%= image_tag stock.display_symbol, :style => "max-width: 4%; flex: flex; align-items: center; justify-content: center"  %> </td>
+      <td><%= link_to "Stock Info", stock_path(stock.id)  %> </td>
+    </tr>
+    <% end %>
+  </tbody>
+  </thead>

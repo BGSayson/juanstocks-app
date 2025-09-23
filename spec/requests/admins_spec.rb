@@ -7,7 +7,6 @@ RSpec.describe "Admins", type: :request do
   let(:testadmin) { create(:user)}
   let(:testuser) { create(:user, id: 2, user_role: :buyer, email: "jane@doe.com")}
 
-
   context "Routing" do
     it "should direct you to admins page if user is admin" do
       sign_in testadmin
