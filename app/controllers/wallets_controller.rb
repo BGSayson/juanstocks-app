@@ -4,7 +4,8 @@ class WalletsController < ApplicationController
   def show
     if current_user_is_buyer_broker
       @wallet = current_user.wallet
-      @transactions = @wallet.transactions
+      @transactions = @wallet.transactions.order(:id).last(5)
+      @investments = @wallet.investments.order(total_share_amount: :desc).first(5)
     else
       redirect_to root_path
     end

@@ -7,58 +7,76 @@ class Transaction < ApplicationRecord
   after_create :update_wallet
 
   def buy(share_amount, stock_symbol)
-    # add investment
+    # call add_investment of wallet and get the array [investment.id, price]
     id_price_array = self.wallet.add_investment(share_amount, stock_symbol)
     buy_price = id_price_array[1]
     new_balance = self.wallet.withdraw(buy_price)
+    # return [investment.id, price, new_balance]
+    # if new_balance isn't included in the return array, update_wallet will not know user's new balance after the buy transaction
     return id_price_array << new_balance
   end
 
   def sell(investment_id, share_amount, stock_symbol)
-    # remove investment 
+    # call remove_investment of wallet and get the array [price, delete_this_investment]
     sell_price_destroyed_array = self.wallet.remove_investment(investment_id, share_amount, stock_symbol)
     sell_price = sell_price_destroyed_array[0]
     new_balance = self.wallet.deposit(sell_price)
+    # return [price, delete_this_investment, new_balance]
+    # if new_balance isn't included in the return array, update_wallet will not know user's new balance after the sell transaction
     return sell_price_destroyed_array << new_balance
   end
 
   private
+  # PLEASE DON'T TOUCH THIS, THIS IS MY CHILD - KELCIE
+  # I attempt to explain this insane code below and above.
   def update_wallet
     new_balance = 0
 
     case self.transaction_type
     when "buy"
+      # call buy and get the array [investment.id, price, new_balance]
       id_price_array = self.buy(self.share_amount, self.stock_symbol)
+      # update transaction retroactively with the correct data, as the test form (23/09/2025) can save it with inaccurate data
       Transaction.find(self.id).update!(price: id_price_array[1].exchange_to('PHP'), investment_id:id_price_array[0])
       new_balance = id_price_array[2]
       if self.wallet.balance_is_negative || new_balance < 0
         raise WalletError, "Balance cannot be less than or equal to zero"
+      elsif self.share_amount < 0
+        raise WalletError, "Cannot buy negative shares"
       end
     when "sell"
+      # call sell and get the array [price, delete_this_investment, new_balance]
       price_balance_array = self.sell(self.investment_id, self.share_amount, self.stock_symbol)
       new_balance = price_balance_array[2]
       
       target_investment = Investment.find(self.investment_id)
       stock_symbol = Stock.find(target_investment.stock_id).symbol
+      # update transaction retroactively with the correct data, as the test form (23/09/2025) can save it with inaccurate data
       Transaction.find(self.id).update!(price: price_balance_array[0].exchange_to('PHP'), stock_symbol: stock_symbol)
       if(price_balance_array[1] == true)
         Investment.destroy(target_investment.id)
       end
     when "withdraw"
       new_balance = self.wallet.withdraw(self.price)
+      
+      # update transaction retroactively with the correct data, as the test form (23/09/2025) can save it with inaccurate data
       Transaction.find(self.id).update!(stock_symbol: nil, investment_id:nil)
+
       if self.wallet.balance_is_negative || new_balance < 0
         raise WalletError, "Balance cannot be less than or equal to zero"
       end
     when "deposit"
       if self.price > 0
         new_balance = self.wallet.deposit(self.price)
+        
+        # update transaction retroactively with the correct data, as the test form (23/09/2025) can save it with inaccurate data
         Transaction.find(self.id).update!(stock_symbol: nil, investment_id:nil)
       else
         raise WalletError, "Cannot deposit negative amounts"
       end
     end
 
+    # update wallet with new_balance
     self.wallet.update!(
       balance: new_balance
     )

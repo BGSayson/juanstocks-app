@@ -1,8 +1,15 @@
 <div>
 <%= form_with model: [@wallet, @wallet.transactions.build], local: true do |f| %>
   <p>
-    <%= f.label :transaction_type %> <br/>
-    <%= f.select :transaction_type, 
+    <%= f.radio_button :transaction_type, 'buy'%>
+    <%= f.label :transaction_type, "Buy" %> <br/>
+    <%= f.radio_button :transaction_type, 'sell'%>
+    <%= f.label :transaction_type, "Sell" %> <br/>
+    <%= f.radio_button :transaction_type, 'withdraw'%>
+    <%= f.label :transaction_type, "Withdraw" %> <br/>
+    <%= f.radio_button :transaction_type, 'deposit'%>
+    <%= f.label :transaction_type, "Deposit" %>
+    <%# f.select :transaction_type, 
       [["Buy", "buy"], 
       ["Sell", "sell"],
       ["Withdraw", "withdraw"],
@@ -23,7 +30,6 @@
 
   <p>
     <%= f.label :investment_id %> <br/>
-    <%# f.text_field :investment_id %>
     <%= f.select :investment_id, options_from_collection_for_select(@wallet.investments, :id, :investment_display) %>
   </p>
 

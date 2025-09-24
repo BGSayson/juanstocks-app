@@ -13,7 +13,7 @@
         </tr>
     </thead>
     <tbody>
-      <% @wallet.transactions.order(:id).each do |transaction| %>
+      <% @transactions.each do |transaction| %>
         <tr>
           <td><%= transaction.id %></td>
           <td><%= transaction.transaction_type %></td>
@@ -38,7 +38,7 @@
         </tr>
     </thead>
     <tbody>
-      <% @wallet.investments.each do |investment| %>
+      <% @investments.each do |investment| %>
         <tr>
           <td><%= investment.id %></td>
           <td><%= investment.total_share_amount %></td>

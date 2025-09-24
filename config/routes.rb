@@ -32,9 +32,9 @@ Rails.application.routes.draw do
   get "/view_transaction/:id" => "admins#view_transaction", as: "view_transaction"
   post "/users/:id" => "users#confirm_user", as: "confirm_user"
   
-  resources :wallets, shallow: true do
-    resources :transactions
-    resources :investments
+  resources :wallets, only:[:show], shallow: true do
+    resources :transactions, only:[:index, :show]
+    resources :investments, only:[:index, :show]
   end
 
   resources :stocks

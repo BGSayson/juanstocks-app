@@ -2,4 +2,3 @@
 <p><%= @investments.count %></p>
 
 <%= button_to 'New Investment', new_wallet_investment_path(@wallet.id), :method => "get" %>
-<%= button_to 'Show First Investment', investment_path(@investments.first.id), :method => "get" %>
