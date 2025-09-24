@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Active Jobs
-  OpenexchangerateJob.perform_later
+  # OpenexchangerateJob.perform_later
   # FinnhubJob.perform_later
 
   # Sidekiq 
