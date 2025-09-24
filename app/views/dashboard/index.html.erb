@@ -1,10 +1,36 @@
 <% if current_user.user_status == "buyer_only" %>
-
+<%= current_user.id %>
 <%# FOR BROKER APPLICATION %>
-<h1>Verify now to become a broker! 
+<h1>Verify now to become a broker! <%= button_to "click here", verify_user_path(current_user.id), method: :post %></h1>
 <% end %>
-Hello trader <%= current_user.first_name%>
+<div >Hello trader</div> <%= current_user.first_name%>
 <%= button_to "Sign out", destroy_user_session_path, method: :delete  %>
+
+<%# STIMULUS TEST ELEMENTS %>
+<div>
+
+  <%# ALERT %>
+  <div data-controller="alert">
+      <button data-action="click->alert#show" style="color: red;">click me</button>
+      <div data-action="click->alert#huh">huh me</div>
+  </div>
+
+  <%# GREETER (IMPORTANT FOR TX FORM!!!) %>
+  <div data-controller="greeter">
+    <input type="text" data-greeter-target="name">
+    <button data-action="click->greeter#greet">Greet me </button>
+    <div data-greeter-target="output"></div>
+  </div>
+
+  <%# COUNTER %>
+  <div data-controller="counter"  data-counter-count-value="0">
+    <div data-counter-target="output"></div>
+    <button data-action="click->counter#addOne" style="color: blue;">click</button>
+  </div>
+
+  
+
+</div>
 
 <%# TESTING WALLET PATHS %>
 <% if(current_user.user_role == "admin" ) %>

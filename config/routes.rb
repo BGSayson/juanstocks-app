@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   get "/all_transactions" => "admins#all_transactions"
   get "/view_transaction/:id" => "admins#view_transaction", as: "view_transaction"
   post "/users/:id" => "users#confirm_user", as: "confirm_user"
+  post "/users/:id/verify_user" => "dashboard#verify_user", as: "verify_user"
   
   resources :wallets, only:[:show], shallow: true do
     resources :transactions, only:[:index, :show]
