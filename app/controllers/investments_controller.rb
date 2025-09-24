@@ -65,20 +65,20 @@ class InvestmentsController < ApplicationController
   #   end
   # end
 
-  def destroy
-    if current_user_is_buyer_broker
-      @wallet = current_user.wallet
-      @investment = Investment.find(params[:id])
+  # def destroy
+  #   if current_user_is_buyer_broker
+  #     @wallet = current_user.wallet
+  #     @investment = Investment.find(params[:id])
 
-      if @investment.destroy
-        redirect_to wallet_investments_path(@wallet.id)
-      else
-        p @investment.errors.messages
-      end
-    else
-      redirect_to root_path
-    end
-  end
+  #     if @investment.destroy
+  #       redirect_to wallet_investments_path(@wallet.id)
+  #     else
+  #       p @investment.errors.messages
+  #     end
+  #   else
+  #     redirect_to root_path
+  #   end
+  # end
 
   private
   def investment_params

@@ -33,11 +33,11 @@ Rails.application.routes.draw do
   post "/users/:id" => "users#confirm_user", as: "confirm_user"
   post "/users/:id/verify_user" => "dashboard#verify_user", as: "verify_user"
   
-  resources :wallets, shallow: true do
-    resources :transactions
-    resources :investments
+  resources :wallets, only:[:show], shallow: true do
+    resources :transactions, only:[:index, :show, :new, :create]
+    resources :investments, only:[:index, :show]
   end
 
-  resources :stocks
+  resources :stocks, only:[:show, :index]
 
 end

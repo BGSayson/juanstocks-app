@@ -4,7 +4,7 @@ class TransactionsController < ApplicationController
 
   def index
     if current_user_is_buyer_broker
-      @transactions = current_user.wallet.transactions
+      @transactions = current_user.wallet.transactions.order(:id)
     else
       @transactions = Transaction.all
     end
@@ -23,8 +23,6 @@ class TransactionsController < ApplicationController
     if current_user_is_buyer_broker
       @wallet = current_user.wallet
       @transaction = @wallet.transactions.build(transaction_params)
-      puts "LOOKIE HERE!!!"
-      puts transaction_params
 
       if @transaction.save
         redirect_to wallet_path(@wallet.id)
