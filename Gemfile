@@ -80,3 +80,5 @@ gem "devise"
 gem "devise-jwt"
 gem "dotenv-rails"
 gem 'httparty'
+gem "tailwindcss-rails"
+gem "tailwindcss-ruby"
