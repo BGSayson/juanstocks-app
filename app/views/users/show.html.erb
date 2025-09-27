@@ -28,6 +28,8 @@
       <% else %>
       <td><%= @user.confirmed_at %> </td>
       <% end %>
+      <td><%= link_to 'Edit', edit_user_path(@user) %></td>
+      <td><%= button_to "x", user_path(@user), data:{ turbo_method: :delete, turbo_confirm: 'Are you sure?' }, method: :delete %></td>
     </tr>
   </tbody>
 </table>

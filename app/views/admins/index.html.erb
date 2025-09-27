@@ -1,10 +1,21 @@
+<%= render 'admins/admin_top_bar'%>
+<div class="<%=admin_flex_col_container%> mt-[4rem]">
+  <h1 class="<%=admin_main_header%> px-[1rem]"> Admin <%= current_user.first_name%> <%= current_user.last_name%> </h1>
 
-Hi admin <%= current_user.first_name%>
-
-<%= link_to "All Users", all_users_path %>
-<%= link_to "Pending Users", all_pending_users_path %>
-<%= link_to "New User", new_admin_user_path(current_user) %>
-<%= link_to "Transactions", all_transactions_path %>
-<%= link_to "All Admins", all_admins_path %>
-
-<%= button_to "Sign out", destroy_user_session_path, method: :delete  %>
+  <div class="<%=admin_flex_row_container%>">
+    <div class="<%=admin_flex_col_container%> px-[1rem]">
+      <%= link_to image_tag('icons/AllUsers.png', height:21, width:21 ) + "All Users", all_users_path, :class => admin_dashboard_button %>
+      <%= link_to image_tag('icons/PendingApprovals.png', height:21, width:21 ) + "Pending Approvals", all_pending_users_path, :class => admin_dashboard_button %>
+      <%= link_to image_tag('icons/AllTransactions.png', height:21, width:21 ) + "Transactions", all_transactions_path, :class => admin_dashboard_button %>
+      <%= link_to image_tag('icons/AllAdmins.png', height:21, width:21 ) + "All Admins", all_admins_path, :class => admin_dashboard_button %>
+    </div>
+    <div class="<%=admin_flex_col_container%> px-[1rem]">
+      <p class="<%=admin_mini_header%>">Statistics</p>
+      <div class="<%=admin_divider%>"></div>
+      <p>Total Users : <%=@users.count%></p>
+      <p>Total Buyers : <%=@buyers.count%></p>
+      <p>Total Brokers : <%=@brokers.count%></p>
+      <p>Total Transactions : <%=@transactions.count%></p>
+    </div>
+  </div>
+</div>

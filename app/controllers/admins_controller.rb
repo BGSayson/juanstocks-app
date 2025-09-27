@@ -3,7 +3,10 @@ class AdminsController < ApplicationController
 
   def index
     if is_user_admin
-      @admins = User.all
+      @users = User.where.not(user_role: 'admin')
+      @buyers = User.where(user_role: 'buyer').or(User.where(user_role: 'broker'))
+      @brokers = User.where(user_role: 'broker')
+      @transactions = Transaction.all
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end

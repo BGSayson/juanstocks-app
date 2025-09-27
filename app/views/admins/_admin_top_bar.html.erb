@@ -1,0 +1,7 @@
+<div class="<%= admin_flex_row_container_top %> fixed top-0 right-0 left-0">
+  <div class="<%= admin_flex_row_container %>">
+    <%= image_tag('icons/JuanStocksIcon.png', height:40, width:40)%>
+    <h2 class="<%=admin_logo_text%>">JuanStocks</h2>
+  </div>
+  <%= button_to image_tag('icons/Sign Out.png', height:21, width:21 ) + "Sign Out", destroy_user_session_path, method: :delete, :class => admin_sign_out_button  %>
+</div>
