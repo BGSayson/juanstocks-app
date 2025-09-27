@@ -1,27 +1,28 @@
-<h1>Transaction details #: <%= @transaction.id %> </div>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Wallet ID</th>
-      <th>Transaction Type</th>
-      <th>Share amount</th>
-      <th>Price</th>
-      <th>Currency</th>
-      <th>Stock Symbol</th>
-      <th>Date and time of transaction</th>
-    </tr>
-
-    <tbody>
-        <tr>
-          <td><%= @transaction.id %> </td>
-          <td><%= @transaction.wallet_id %> </td>
-          <td><%= @transaction.transaction_type %> </td>
-          <td><%= @transaction.share_amount %> </td>
-          <td><%= @transaction.price_cents %> </td>
-          <td><%= @transaction.price_currency %> </td>
-          <td><%= @transaction.stock_symbol %> </td>
-          <td><%= @transaction.created_at.localtime.to_formatted_s(:long) %> </td>
-        </tr>
-    </tbody>
-</table>
+<%= render 'admins/admin_top_bar'%>
+<div class="<%=admin_flex_col_container%> px-[1rem] mt-[5rem]">
+<h1 class="<%=admin_main_header%>">Transaction #<%= @transaction.id %></div>
+  <div class="<%=admin_flex_col_container%> px-[1rem]">
+    <p class="<%=admin_mini_header%> pt-[1rem]">User Details</p>
+    <div class="<%=admin_divider%>"></div>
+    <p>First Name : <%= @user.first_name %></p>
+    <p>Last Name : <%= @user.last_name %></p>
+    <p>Role : <%= @user.user_role %> </p>
+    <p>Status : <%= @user.user_status %> </p>
+    <p>Wallet Balance : <%= @user.wallet.balance.format %> </p>
+    <% if @user.confirmed_at == nil   %>
+    <p> Account not confirmed </p>
+    <% else %>
+    <p>Account Confirmed : <%= @user.confirmed_at %></p>
+    <% end %>
+    <%= button_to image_tag('icons/Search.png', height:21, width:21 ) +'Show User', user_path(@user), method: :get, :class=> admin_dashboard_button %>
+    <p class="<%=admin_mini_header%>">Transaction Details</p>
+    <div class="<%=admin_divider%>"></div>
+    <p>Transaction Type : <%= @transaction.transaction_type %></p>
+    <% if @transaction.stock_symbol != nil %>
+      <p>Stock Symbol : <%= @transaction.stock_symbol %></p>
+      <p>Shares : <%= @transaction.share_amount %></p>
+    <% end %>
+    <p>Amount : <%= @transaction.price.format %></p>
+    <p>Timestamp : <%= @transaction.created_at.localtime.to_formatted_s(:long) %></p>
+  </div>
+</div>

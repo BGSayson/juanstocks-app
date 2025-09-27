@@ -1,0 +1,24 @@
+<% if transactions.empty? %>
+  <p>No transactions to display</p>
+<% else %>
+  <table class="<%=admin_table%>">
+    <thead>
+      <tr>
+        <th class="<%=admin_thead_border%>">ID</th>
+        <th class="<%=admin_thead_border%>">Stock Symbol</th>
+        <th class="<%=admin_thead_border%>">Shares</th>
+        <th class="<%=admin_thead_border%>">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% transactions.each do |tx| %>
+      <tr>
+        <td><%= tx.id %> </td>
+        <td><%= tx.stock_symbol %> </td>
+        <td><%= tx.share_amount %> </td>
+        <td><%= tx.price.format %> </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

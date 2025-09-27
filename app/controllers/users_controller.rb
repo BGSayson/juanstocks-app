@@ -12,6 +12,9 @@ class UsersController < ApplicationController
   def show
     if is_user_admin
       @user = User.find(params[:id])
+      @wallet = @user.wallet
+      @transactions = @wallet.transactions.order(:id)
+      @investments = @wallet.investments.order(:id)
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end

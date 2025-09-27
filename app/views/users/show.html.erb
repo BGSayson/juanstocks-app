@@ -1,35 +1,30 @@
-<h1>User details of: <%= @user.first_name %> <%= @user.last_name %></h1> <div> <%= link_to "Back to Users", all_users_path %> </div>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>User role</th>
-      <th>User status</th>
-      <th>Date and time email was confirmed</th>
-      <% if @user.confirmed_at == nil%>
-      <th> Confirm email?</th>
-      <% end %>
-      <th><%= link_to "Edit user details here", edit_user_path(@user) %></th>
-    </tr>
-  </thead>
+<%= render 'admins/admin_top_bar'%>
+<div class="<%=admin_flex_col_container%> mt-[5rem]">
+  <h1 class="<%=admin_main_header%> px-[1rem]">User #<%=@user.id%> : <%= @user.first_name %> <%= @user.last_name %></h1>
+  <div class="<%=admin_flex_col_container%> px-[1rem]">
+    <div class="<%=admin_divider%>"></div>
+    <p>First Name : <%= @user.first_name %></p>
+    <p>Last Name : <%= @user.last_name %></p>
+    <p>Role : <%= @user.user_role %> </p>
+    <p>Status : <%= @user.user_status %> </p>
+    <p>Wallet Balance : <%= @wallet.balance.format %> </p>
+    <% if @user.confirmed_at == nil   %>
+    <p> Account not confirmed </p>
+    <% else %>
+    <p>Account Confirmed : <%= @user.confirmed_at %></p>
+    <% end %>
 
-  <tbody>
-    <tr>
-      <td><%= @user.id %> </td>
-      <td><%= @user.first_name %> </td>
-      <td><%= @user.last_name %> </td>
-      <td><%= @user.user_role %> </td>
-      <td><%= @user.user_status %> </td>
-      <% if @user.confirmed_at == nil   %>
-      <td> Account not confirmed </td>
-      <td> <%= button_to "Confirm email", confirm_user_path, method: :post %> </td>
-      <% else %>
-      <td><%= @user.confirmed_at %> </td>
-      <% end %>
-      <td><%= link_to 'Edit', edit_user_path(@user) %></td>
-      <td><%= button_to "x", user_path(@user), data:{ turbo_method: :delete, turbo_confirm: 'Are you sure?' }, method: :delete %></td>
-    </tr>
-  </tbody>
-</table>
+    <div class="<%= admin_flex_row_container %>">
+    <% if @user.confirmed_at == nil %>
+    <%= button_to image_tag('icons/ConfirmUser.png', height:21, width:21 ) +"Confirm Email", confirm_user_path, method: :post, :class=> admin_dashboard_button %>
+    <% end %>
+    <%= button_to image_tag('icons/EditUser.png', height:21, width:21 ) +'Edit User', edit_user_path(@user), method: :get, :class=> admin_dashboard_button %>
+    <%= button_to image_tag('icons/DeleteUser.png', height:21, width:21 ) +"Delete User", user_path(@user), data:{ turbo_method: :delete, turbo_confirm: 'Are you sure?' }, method: :delete, :class=> admin_dashboard_button %>
+    </div>
+
+    <p class="<%=admin_mini_header%>">Transactions : <%= @transactions.count %> </p>
+    <%= render 'users/transaction_table', transactions: @transactions %>
+    <p class="<%=admin_mini_header%>">Investments : <%= @investments.count %> </p>
+    <%= render 'users/investment_table', investments: @investments %>
+  </div>
+</div>

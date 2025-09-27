@@ -21,7 +21,7 @@ module AdminsHelper
     "flex flex-row gap-[1rem] items-center-safe px-[1rem] py-[0.25rem] cursor-pointer bg-[#8B7DC3] hover:bg-[#FFA62B] font-bold text-white text-[16px]"
   end
   def admin_divider
-    "h-0.5 border-t-0 bg-[#8B7DC3]"
+    "h-0.5 bg-[#8B7DC3]"
   end
   def admin_mini_header
     "text-[18px] text-[#111] font-bold"
@@ -30,6 +30,12 @@ module AdminsHelper
     "cursor-pointer bg-[#8B7DC3] hover:bg-[#FFA62B] px-[0.5rem] py-[0.5rem] rounded-lg"
   end
   def admin_table
-    "table-fixed border-separate border-spacing-[0.25rem] text-center"
+    "table-fixed border-collapse text-center"
+  end
+  def admin_thead_border
+    "border-solid border-b-2 border-[#8B7DC3] text-[#45454560]"
+  end
+  def admin_tr_space
+    "py-[0.1rem]"
   end
 end

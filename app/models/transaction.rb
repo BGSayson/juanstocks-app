@@ -54,7 +54,7 @@ class Transaction < ApplicationRecord
       # update transaction retroactively with the correct data, as the test form (23/09/2025) can save it with inaccurate data
       Transaction.find(self.id).update!(price: sell_price_destroyed_array[0].exchange_to('PHP'), stock_symbol: stock_symbol)
       
-      if(price_balance_array[1] == true)
+      if(sell_price_destroyed_array[1] == true)
         Investment.destroy(target_investment.id)
       end
     when "withdraw"

@@ -1,5 +1,5 @@
 <%= render 'admins/admin_top_bar'%>
-<div class="<%=admin_flex_col_container%> px-[1rem] mt-[4rem]">
+<div class="<%=admin_flex_col_container%> px-[1rem] mt-[5rem]">
   <div class="<%=admin_flex_row_container%> justify-between">
     <h1 class="<%=admin_main_header%>">All Juanstocks Users</h1>
     <%= button_to image_tag('icons/NewUser.png', height:21, width:21 ) + "New User", new_admin_user_path(current_user), method: :get, :class => admin_dashboard_button %>
@@ -7,18 +7,18 @@
   <table class="<%=admin_table%>">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Status</th>
-        <th>Confirmed Timestamp</th>
+        <th class="<%=admin_thead_border%>">ID</th>
+        <th class="<%=admin_thead_border%>">First Name</th>
+        <th class="<%=admin_thead_border%>">Last Name</th>
+        <th class="<%=admin_thead_border%>">Email</th>
+        <th class="<%=admin_thead_border%>">Role</th>
+        <th class="<%=admin_thead_border%>">Status</th>
+        <th class="<%=admin_thead_border%>">Confirmed Timestamp</th>
       </tr>
     </thead>
     <tbody>
     <% @users.each do |user| %>
-      <tr>
+      <tr class="hover:bg-[#8B7DC324]">
         <td><%= user.id %> </td>
         <td><%= user.first_name %> </td>
         <td><%= user.last_name %> </td>

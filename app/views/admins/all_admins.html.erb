@@ -1,26 +1,26 @@
-<h1>All Juanstocks Admins</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>First_name</th>
-      <th>Last_name</th>
-      <th>Email</th>
-      <th>user_role</th>
-      <th>user_status</th>
-    </tr>
-
-      <tbody>
-  <% @admins.each do |admin| %>
-    <tr>
-      <td><%= admin.id %> </td>
-      <td><%= admin.first_name %> </td>
-      <td><%= admin.last_name %> </td>
-      <td><%= admin.email %> </td>
-      <td><%= admin.user_role %> </td>
-      <td><%= admin.user_status %> </td>
-    </tr>
-    <% end %>
-  </tbody>
-  </thead>
+<%= render 'admins/admin_top_bar'%>
+<div class="<%=admin_flex_col_container%> px-[1rem] mt-[5rem]">
+  <h1 class="<%=admin_main_header%>">All Juanstocks Admins</h1>
+  <table class="<%=admin_table%>">
+    <thead>
+      <tr>
+        <th class="<%=admin_thead_border%>">ID</th>
+        <th class="<%=admin_thead_border%>">First_name</th>
+        <th class="<%=admin_thead_border%>">Last_name</th>
+        <th class="<%=admin_thead_border%>">Email</th>
+        <th class="<%=admin_thead_border%>">user_role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @admins.each do |admin| %>
+      <tr>
+        <td><%= admin.id %> </td>
+        <td><%= admin.first_name %> </td>
+        <td><%= admin.last_name %> </td>
+        <td><%= admin.email %> </td>
+        <td><%= admin.user_role %> </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

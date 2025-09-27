@@ -1,4 +1,4 @@
-<div class="field">
+  <div class="field">
     <%= f.label :first_name %><br />
     <%= f.text_field :first_name, autofocus: true, autocomplete: "First name" %>
   </div>
@@ -14,14 +14,14 @@
   </div>
 
 
-<% if action_name == "new" %>
-  <div class="field flex flex-col items-start">
-    <%= f.label "Password:", class: "text-[1.5rem]" %>
-    <% if @minimum_password_length %>
-    <em>(8 characters minimum and must include: 1 uppercase, 1 lowercase, 1 digit and 1 special character)</em>
-    <% end %>
-    <%= f.password_field :password, autocomplete: "new-password", class: "border-[2px] rounded-[4px]" %>
-  </div>
+  <% if action_name == "new" %>
+    <div class="field flex flex-col items-start">
+      <%= f.label "Password:", class: "text-[1.5rem]" %>
+      <% if @minimum_password_length %>
+      <em>(8 characters minimum and must include: 1 uppercase, 1 lowercase, 1 digit and 1 special character)</em>
+      <% end %>
+      <%= f.password_field :password, autocomplete: "new-password", class: "border-[2px] rounded-[4px]" %>
+    </div>
   <% end %>
 
   <div>
@@ -34,13 +34,13 @@
     <%= f.select :user_status, User.user_statuses.keys.map { |k| [k.humanize, k] } %>
   </div>
 
-<% if action_name == "new" %>
-  <p>
-    <%= f.submit "Submit and Send Confirmation Email"%>
-    <%= f.submit "Submit and Confirm immediately" %>
-  </p>
-<% else %>
-  <p>
-    <%= f.submit "Save changes" %>
-  </p>
-<% end %>
+  <% if action_name == "new" %>
+    <p>
+      <%= f.submit "Submit and Send Confirmation Email"%>
+      <%= f.submit "Submit and Confirm immediately" %>
+    </p>
+  <% else %>
+    <p>
+      <%= f.submit "Save changes" %>
+    </p>
+  <% end %>
