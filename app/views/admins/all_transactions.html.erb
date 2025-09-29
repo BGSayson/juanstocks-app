@@ -1,31 +1,31 @@
-
-<h1>All Transactions</h1>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Wallet ID</th>
-      <th>Transaction Type</th>
-      <th>Share amount</th>
-      <th>Price</th>
-      <th>Currency</th>
-      <th>Stock Symbol</th>
-      <th>Date and time of transaction</th>
-    </tr>
-
+<%= render 'admins/admin_top_bar'%>
+<div class="<%=admin_flex_col_container%> px-[1rem] mt-[1rem]">
+  <h1 class="<%=admin_main_header%>">All Transactions</h1>
+  <table class="<%=admin_table%>">
+    <thead>
+      <tr>
+        <th class="<%=admin_thead_border%>">ID</th>
+        <th class="<%=admin_thead_border%>">User Email</th>
+        <th class="<%=admin_thead_border%>">Transaction Type</th>
+        <th class="<%=admin_thead_border%>">Shares</th>
+        <th class="<%=admin_thead_border%>">Amount</th>
+        <th class="<%=admin_thead_border%>">Stock Symbol</th>
+        <th class="<%=admin_thead_border%>">Transaction Timestamp</th>
+      </tr>
+    </thead>
     <tbody>
       <% @transactions.each do |tx| %>
-        <tr>
+        <tr class="hover:bg-[#8B7DC324]">
           <td><%= tx.id %> </td>
-          <td><%= tx.wallet_id %> </td>
+          <td><%= tx.wallet.user.email %> </td>
           <td><%= tx.transaction_type %> </td>
           <td><%= tx.share_amount %> </td>
-          <td><%= tx.price_cents %> </td>
-          <td><%= tx.price_currency %> </td>
+          <td><%= tx.price.format %> </td>
           <td><%= tx.stock_symbol %> </td>
           <td><%= tx.created_at.localtime.to_formatted_s(:long) %> </td>
-          <td><%= link_to 'Show', view_transaction_path(tx.id) %></td>
+          <td><%= button_to image_tag('icons/Search.png', height:21, width:21 ), view_transaction_path(tx.id), method: :get, :class=> admin_mini_button%></td>
         </tr>
       <% end %>
     </tbody>
-  </thead>
+  </table>
+</div>

@@ -46,14 +46,15 @@ class Transaction < ApplicationRecord
       end
     when "sell"
       # call sell and get the array [price, delete_this_investment, new_balance]
-      price_balance_array = self.sell(self.investment_id, self.share_amount, self.stock_symbol)
-      new_balance = price_balance_array[2]
+      sell_price_destroyed_array = self.sell(self.investment_id, self.share_amount, self.stock_symbol)
+      new_balance = sell_price_destroyed_array[2]
       
       target_investment = Investment.find(self.investment_id)
       stock_symbol = Stock.find(target_investment.stock_id).symbol
       # update transaction retroactively with the correct data, as the test form (23/09/2025) can save it with inaccurate data
-      Transaction.find(self.id).update!(price: price_balance_array[0].exchange_to('PHP'), stock_symbol: stock_symbol)
-      if(price_balance_array[1] == true)
+      Transaction.find(self.id).update!(price: sell_price_destroyed_array[0].exchange_to('PHP'), stock_symbol: stock_symbol)
+      
+      if(sell_price_destroyed_array[1] == true)
         Investment.destroy(target_investment.id)
       end
     when "withdraw"
@@ -63,6 +64,7 @@ class Transaction < ApplicationRecord
       Transaction.find(self.id).update!(stock_symbol: nil, investment_id:nil)
 
       if self.wallet.balance_is_negative || new_balance < 0
+        # Important to roll back the database
         raise WalletError, "Balance cannot be less than or equal to zero"
       end
     when "deposit"

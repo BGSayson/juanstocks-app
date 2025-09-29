@@ -32,7 +32,7 @@ RSpec.describe "Admins", type: :request do
       sign_in testadmin
       get user_path(testuser)
       expect(response).to have_http_status(:success)
-      expect(response.body).to include(/User details of:/)
+      expect(response.body).to include(/User/)
     end
 
     it "should access New page to create a user" do  

@@ -12,6 +12,9 @@ class UsersController < ApplicationController
   def show
     if is_user_admin
       @user = User.find(params[:id])
+      @wallet = @user.wallet
+      @transactions = @wallet.transactions.order(:id)
+      @investments = @wallet.investments.order(:id)
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end
@@ -19,7 +22,7 @@ class UsersController < ApplicationController
 
   def all_pending_users
     if is_user_admin
-      @users = User.where()
+      @users = User.where(user_status: 'pending')
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end
@@ -54,15 +57,17 @@ class UsersController < ApplicationController
 
       if params[:commit] == "Submit and Confirm immediately"
         @user.skip_confirmation!
-        @user.save
-        flash[:notice] = "User created successfully and email is simultaneously confirmed"
-        redirect_to user_path(@user) and return
+        if @user.save
+          flash[:notice] = "User created successfully and email is simultaneously confirmed"
+          redirect_to user_path(@user) and return
+        end
        else
-        flash[:notice] = "User created successfully"
-        @user.save
-        redirect_to user_path(@user) and return
+        if @user.save
+          flash[:notice] = "User created successfully"
+          redirect_to user_path(@user) and return
+        end
       end
-      redirect_to dashboard_path, alert: "User is unauthorized"
+      redirect_to new_admin_user_path, alert: "Unable to create user"
     end
   end
 

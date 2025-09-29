@@ -1,0 +1,24 @@
+<% if investments.empty? %>
+  <p>No investments to display</p>
+<% else %>
+  <table class="<%=admin_table%>">
+    <thead>
+      <tr>
+        <th class="<%=admin_thead_border%>">ID</th>
+        <th class="<%=admin_thead_border%>">Stock Symbol</th>
+        <th class="<%=admin_thead_border%>">Shares</th>
+        <th class="<%=admin_thead_border%>">Buy Price</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% investments.each do |inv| %>
+      <tr>
+        <td><%= inv.id %> </td>
+        <td><%= Stock.find(inv.stock_id).symbol %> </td>
+        <td><%= inv.total_share_amount %> </td>
+        <td><%= inv.buying_price.format %> </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

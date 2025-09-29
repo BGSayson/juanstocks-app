@@ -3,7 +3,10 @@ class AdminsController < ApplicationController
 
   def index
     if is_user_admin
-      @admins = User.all
+      @users = User.where.not(user_role: 'admin')
+      @buyers = User.where(user_role: 'buyer').or(User.where(user_role: 'broker'))
+      @brokers = User.where(user_role: 'broker')
+      @transactions = Transaction.all
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end
@@ -11,7 +14,7 @@ class AdminsController < ApplicationController
 
   def all_users
     if is_user_admin
-      @users = User.all
+      @users = User.where.not(user_role: 'admin')
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end
@@ -35,7 +38,7 @@ class AdminsController < ApplicationController
 
   def all_transactions
     if is_user_admin
-      @transactions = Transaction.all
+      @transactions = Transaction.all.order(:created_at)
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end
@@ -44,6 +47,7 @@ class AdminsController < ApplicationController
   def view_transaction
     if is_user_admin
       @transaction = Transaction.find(params[:id])
+      @user = @transaction.wallet.user
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end
