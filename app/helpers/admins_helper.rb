@@ -38,4 +38,7 @@ module AdminsHelper
   def admin_tr_space
     "py-[0.1rem]"
   end
+  def admin_form_field
+    "border border-[2px] border-solid border-[#111] rounded-sm"
+  end
 end

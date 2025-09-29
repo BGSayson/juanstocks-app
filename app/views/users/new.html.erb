@@ -1,5 +1,5 @@
 <%= render 'admins/admin_top_bar'%>
-<div class="<%=admin_flex_col_container%> mt-[5rem]">
+<div class="<%=admin_flex_col_container%> mt-[1rem]">
   <%= form_with scope: :user, url: admin_users_path, local: true do |f| %>
   <%= render '/shared/users/form', f: f%>
   <% end %>

@@ -1,5 +1,5 @@
 <%= render 'admins/admin_top_bar'%>
-<div class="<%=admin_flex_col_container%> px-[1rem] mt-[5rem]">
+<div class="<%=admin_flex_col_container%> px-[1rem] mt-[1rem]">
   <div class="<%=admin_flex_row_container%> justify-between">
     <h1 class="<%=admin_main_header%>">All Juanstocks Users</h1>
     <%= button_to image_tag('icons/NewUser.png', height:21, width:21 ) + "New User", new_admin_user_path(current_user), method: :get, :class => admin_dashboard_button %>
