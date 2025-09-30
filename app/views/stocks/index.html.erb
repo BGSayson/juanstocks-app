@@ -1,34 +1,31 @@
-<h1>Stonks</h1>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Symbol</th>
-      <th>Desc.</th>
-      <th>Price</th>
-      <th>Change</th>
-      <th>Percent Change</th>
-      <th>High Price of the Day</th>
-      <th>Low Price of the Day</th>
-      <th>Currency</th>
-      <th>Logo</th>
-    </tr>
-
-      <tbody>
-  <% @stocks.each do |stock| %>
-    <tr>
-      <td><%= stock.id %> </td>
-      <td><%= stock.symbol %> </td>
-      <td><%= stock.description %> </td>
-      <td><%= stock.current_price_cents %> </td>
-      <td><%= stock.change %> </td>
-      <td><%= stock.percent_change %> </td>
-      <td><%= stock.high_price_of_the_day_cents %> </td>
-      <td><%= stock.low_price_of_the_day_cents %> </td>
-      <td><%= stock.current_price_currency %> </td>
-      <td><%= image_tag stock.display_symbol, :style => "max-width: 4%; flex: flex; align-items: center; justify-content: center"  %> </td>
-      <td><%= link_to "Stock Info", stock_path(stock.id)  %> </td>
-    </tr>
-    <% end %>
-  </tbody>
-  </thead>
+<div class="<%=gridParent%>">
+  <div class="<%=gridChild%>">
+    
+    <%# GRID 1 %>
+    <%= render "shared/navbar" %>
+    
+    <%# GRID 2 %>
+    <div class="grid2 w-full h-full flex flex-col items-center justify-evenly px-8 text-[#454545]">
+      <div class="text-[3.5rem] font-bold m-3">Stonks Market</div>
+        <table class="table-auto">
+          <thead>
+            <tr class="text-[#89898c] text-[1.5rem] border-b-[5px] rounded-[20px] border-[#8B7DC3]">
+              <th>Logo</th>
+              <th>Symbol</th>
+              <th>Desc.</th>
+              <th>Price</th>
+              <th>Change</th>
+              <th>Percent Change</th>
+              <th>High Price of the Day</th>
+              <th>Low Price of the Day</th>
+              <th>Currency</th>
+            </tr>
+            <% @stocks.each do |stock| %>
+              <%= render "shared/stocks_table", stock: stock %>
+            <% end %>
+          </thead>
+        </table>
+    </div>
+    
+  </div>
+</div>

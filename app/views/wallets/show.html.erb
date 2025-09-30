@@ -1,53 +1,66 @@
-<h1>Show Wallet</h1>
-<p><%= @wallet.balance.format %></p>
-<h2>Transactions <%= @wallet.transactions.count %></h2>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Transaction Type</th>
-            <th>Stock Symbol</th>
-            <th>Share Amount</th>
-            <th>Investment ID</th>
-            <th>Amount</th>
-        </tr>
-    </thead>
-    <tbody>
-      <% @transactions.each do |transaction| %>
-        <tr>
-          <td><%= transaction.id %></td>
-          <td><%= transaction.transaction_type %></td>
-          <td><%= transaction.stock_symbol %></td>
-          <td><%= transaction.share_amount %></td>
-          <td><%= transaction.investment_id %></td>
-          <td><%= transaction.price.format %></td>
-        </tr>
-      <% end %>
-    </tbody>
-</table>
+<div class="flex items-start justify-center w-full h-full bg-[#f1eff7]">
+  <div class="m-auto grid grid-cols-[0.2fr_1fr] w-full h-full">
+    
+    <%# GRID 1 %>
+    <%= render "shared/navbar" %>
 
-<h2>Investments</h2>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Share Amount</th>
-            <th>Buying Price</th>
-            <th>Stock ID</th>
-            <th>Company Name</th>
-        </tr>
-    </thead>
-    <tbody>
-      <% @investments.each do |investment| %>
-        <tr>
-          <td><%= investment.id %></td>
-          <td><%= investment.total_share_amount %></td>
-          <td><%= investment.buying_price.format %></td>
-          <td><%= investment.stock_id %></td>
-          <td><%= Stock.find(investment.stock_id).description %></td>
-        </tr>
-      <% end %>
-    </tbody>
-</table>
+    <%# GRID 2%>
+    <div class="w-full h-full flex flex-col items-center justify-evenly px-8 text-[#454545] overflow-y-auto overflow-x-hidden pt-1">
+        <% if current_user.wallet.transactions != [] %>
+        <%else%>
+          <div class="rounded-[30px] bg-[#FFA62B] p-4 pl-7 pr-7 text-white text-[3rem] font-bold hover:bg-[#F58E00] mt-2"> User has no Transactions yet!</div>
+        <%end%>
+      <div class="bg-[#8B7DC3] text-white m-4 p-4 pt-6 pb-6 rounded-[20px] flex flex-col justify-center items-center w-[60%]">
+        <h1 class="font-bold text-[3rem]">Your Wallet</h1>
+        <p class="font-bold text-[4rem] flex items-center justify-center gap-3">
+          <%= link_to "+", new_wallet_transaction_path(current_user.wallet.id, transaction_type: "deposit"), class: "rounded-[15px] bg-[#FFA62B] p-2 pl-4 pr-4 pt-0 pb-0 text-white text-[2rem] font-bold hover:bg-[#F58E00]" %>
+          <%= @wallet.balance.format %>
+        </p>
+      </div>
 
-<%= button_to 'New Transaction', new_wallet_transaction_path(@wallet.id), :method => "get" %>
+      <%= link_to "New Transaction", new_wallet_transaction_path(current_user.wallet.id), class: "rounded-[30px] bg-[#FFA62B] p-4 pl-7 pr-7 text-white text-[1.8rem] font-bold hover:bg-[#F58E00]" %>
+
+      <h2 class="bg-[#8B7DC3] text-white m-3 p-4 rounded-[20px] font-bold text-[2rem]">Your Transactions:</h2>
+      <table class=" table-auto bg-[white] rounded-[15px] m-5 w-[65%]">
+          <thead class="">
+              <tr class="border-b-[5px] rounded-[20px] border-[#8B7DC3] text-[1.5rem] text-[#89898c] text-center">
+                  <th class="p-3 pb-2">Transaction Type</th>
+                  <th class="p-3 pb-2">Stock Symbol</th>
+                  <th class="p-3 pb-2">Share Amount</th>
+                  <th class="p-3 pb-2">Investment ID</th>
+                  <th class="p-3 pb-2">Amount</th>
+                  <th class="p-3 pb-2">Transaction date:</th>
+              </tr>
+          </thead>
+          <tbody class="">
+            <% @transactions.each do |transaction| %>
+              <tr class="border-b-[#f1eff7] border-b-[3px] text-[#454545] font-bold text-center text-[1.2rem]">
+                <td class="p-1"><%= transaction.transaction_type %></td>
+                <% if transaction.stock_symbol != nil %>
+                  <td class=""><%= transaction.stock_symbol %></td>
+                <% else %>
+                  <td class="text-center">-</td>
+                <% end %>
+
+                <% if transaction.share_amount != nil %>
+                <td class=""><%= transaction.share_amount %></td>
+                <% else %>
+                  <td class=" text-center">-</td>
+                <% end %>
+
+                <% if transaction.investment_id != nil %>
+                  <td class=""><%= transaction.investment_id %></td>
+                <% else %>
+                  <td class=" text-center">-</td>
+                <% end %>
+
+                <td class=""><%= transaction.price.format %></td>
+                <td class=""><%= transaction.created_at.localtime.to_formatted_s(:nice) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

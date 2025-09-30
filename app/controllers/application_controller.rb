@@ -17,11 +17,17 @@ class ApplicationController < ActionController::Base
     if current_user.user_role == "admin"
       admins_path
     else
+      if current_user.user_status == "buyer_only"
+        flash[:notice] = "Go to your profile and verify now to be able to sell!"
+      end
       dashboard_path
     end
   end
 
   def after_sign_up_path_for(resource)
+      if current_user.user_status == "buyer_only"
+        flash[:notice] = "Go to your profile and verify now to be able to sell!"
+      end
     dashboard_path # your path
   end
 
@@ -30,7 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Active Jobs
-  # OpenexchangerateJob.perform_later
+  OpenexchangerateJob.perform_later
   # FinnhubJob.perform_later
 
   # Sidekiq

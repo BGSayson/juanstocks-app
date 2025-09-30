@@ -22,7 +22,7 @@ class UsersController < ApplicationController
 
   def all_pending_users
     if is_user_admin
-      @users = User.where(user_status: "pending")
+      @users = User.pending_users
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end

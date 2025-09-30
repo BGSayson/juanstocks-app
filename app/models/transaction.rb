@@ -6,6 +6,8 @@ class Transaction < ApplicationRecord
 
   after_create :update_wallet
 
+  scope :recent_txs, -> { order(created_at: :desc) }
+
   def buy(share_amount, stock_symbol)
     # call add_investment of wallet and get the array [investment.id, price]
     id_price_array = self.wallet.add_investment(share_amount, stock_symbol)
@@ -34,6 +36,11 @@ class Transaction < ApplicationRecord
 
     case self.transaction_type
     when "buy"
+      if self.share_amount == nil
+        raise WalletError, "Cannot buy null shares"
+      elsif self.share_amount < 0
+        raise WalletError, "Cannot buy negative shares"
+      end
       # call buy and get the array [investment.id, price, new_balance]
       id_price_array = self.buy(self.share_amount, self.stock_symbol)
       # update transaction retroactively with the correct data, as the test form (23/09/2025) can save it with inaccurate data
@@ -41,8 +48,6 @@ class Transaction < ApplicationRecord
       new_balance = id_price_array[2]
       if self.wallet.balance_is_negative || new_balance < 0
         raise WalletError, "Balance cannot be less than or equal to zero"
-      elsif self.share_amount < 0
-        raise WalletError, "Cannot buy negative shares"
       end
     when "sell"
       # call sell and get the array [price, delete_this_investment, new_balance]

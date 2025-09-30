@@ -37,7 +37,7 @@ class FinnhubJob < ApplicationJob
           high_price_of_the_day_cents:  quote["h"],
           low_price_of_the_day_cents:   quote["l"]
         )
-        rescue FinnhubRuby::ApiError => e
+        rescue StandardError => e
         Rails.logger.error "Finnhub API error for #{stock.symbol}: #{e.message}"
         next
       end

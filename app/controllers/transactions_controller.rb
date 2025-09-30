@@ -14,6 +14,7 @@ class TransactionsController < ApplicationController
     if current_user_is_buyer_broker
       @wallet = current_user.wallet
       @transaction = Transaction.new
+      @transaction.transaction_type = nil
     else
       redirect_to root_path
     end
@@ -22,12 +23,13 @@ class TransactionsController < ApplicationController
   def create
     if current_user_is_buyer_broker
       @wallet = current_user.wallet
-      @transaction = @wallet.transactions.build(transaction_params)
+      puts transaction_params
+        @transaction = @wallet.transactions.build(transaction_params)
 
       if @transaction.save
         redirect_to wallet_path(@wallet.id)
       else
-        p @transaction.errors.messages
+        flash[:alert] = @transaction.errors.messages
         render :new
       end
     else
@@ -45,6 +47,7 @@ class TransactionsController < ApplicationController
   end
 
   def redirect
+    flash[:alert] = "Invalid Transaction"
     @wallet = current_user.wallet
     redirect_to wallet_path(@wallet.id)
   end

@@ -39,4 +39,6 @@ Rails.application.routes.draw do
   end
 
   resources :stocks, only: [ :show, :index ]
+
+  get "/user_profile" => "dashboard#user_profile", as: "user_profile"
 end
