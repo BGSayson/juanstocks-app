@@ -1,9 +1,58 @@
-JuanStocks by Juan Tamad
+<div class="<%= welcome_flex_col_container%>">
+  <div class="<%= welcome_flex_row_container_top%> sticky top-0 right-0 left-0">
+    <%= image_tag('icons/JuanStocksIcon.png', height:40, width:40) %>
+    <% if user_signed_in? %>
+    <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: welcome_primary_button %>
+    <% else %>
+    <div class="<%= welcome_flex_row_container %>">
+    <%= button_to "Sign Up", new_user_registration_path, method: :get, class: welcome_secondary_button_purple %>
+    <%= button_to "Log In", new_user_session_path, method: :get, class: welcome_primary_button %>
+    </div>
+    <% end %>
+  </div>
+  
+  <div class="h-[420px] bg-[url('welcome/main_image.png')] bg-center bg-no-repeat bg-cover">
+  </div>
+  
+  <div class="<%=welcome_flex_col_container%> items-center-safe text-white bg-[#8B7DC3] py-[2rem]">
+    <div class="<%= welcome_flex_row_container %> justify-center-safe">
+      <%= image_tag('icons/JuanStocksIcon.png', height:64, width:64) %>
+      <h1 class="font-bold text-[64px]">JuanStocks</h1>
+    </div>
+    <p class="text-center text-lg">“Tinamad ako mag-isip ng tagline. Basta trade stocks.”</p>
+  </div>
 
-<%= button_to "Enter", new_user_session_path, method: :get%>
+  <div class="<%=welcome_flex_row_container%> justify-center-safe bg-white text-[#8B7DC3] py-[2rem]">
+    <div class="px-[2rem]">
+      <h3 class="text-2xl">Open for Beta Testing!</h3>
+      <p class="text-lg">Currenty using the top 30 US stocks based on the Dow Jones Industrial Average.</p>
+      <p class="text-lg">Our founder, Juan Tamad, cannot promise that more will be added!</p>
+    </div>
+    <%= image_tag('welcome/dow_jones.png', width: 500) %>
+  </div>
 
+  <div class="<%=welcome_flex_row_container%> justify-center-safe bg-white text-[#8B7DC3] py-[2rem]">
+    <%= image_tag('welcome/founder.png', width: 500) %>
+    <div class="px-[2rem]">
+      <h3 class="text-2xl">A message from our founder, Juan Tamad</h3>
+      <p class="text-lg">“Ang dami niyong pinapagawa sa akin ha. Wala akong kinalaman dito! May niloko lang ako para gawin ang website na 'to!”</p>
+    </div>
+  </div>
 
+  <div class="<%=welcome_flex_col_container%> items-center-safe text-white bg-[#8B7DC3] py-[2rem] gap-[1rem]">
+    <p class="text-center text-lg">“Nandito ka pa rin? Mag-sign up ka na nga!”</p>
+    <%= button_to "Sign Up", new_user_registration_path, method: :get, class: welcome_primary_button %>
+  </div>
 
-<% if user_signed_in? %>
-<%= button_to "Sign out", destroy_user_session_path, method: :delete %>
-<% end %>
+  <div class="<%=welcome_flex_col_container%> bg-[#313131] px-[1rem] py-[2rem]">
+    <p class="text-white font-bold">Juanstocks Not Real Office</p>
+    <p class="text-white font-bold text-sm">1234 Fake Street, Fake City, Fake Country</p>
+    <p class="text-white font-bold text-sm">+63 12345657890</p>
+    <p class="text-white font-bold text-sm">fake_email@fake_domain.com</p>
+    <br/>
+    <p class="text-[#ADADAD] font-bold text-xs">Image Credits : Unsplash</p>
+    <p class="text-[#ADADAD] font-bold text-xs">Icon Credits : Flaticon</p>
+  </div>
+  
+  </div>
+</div>

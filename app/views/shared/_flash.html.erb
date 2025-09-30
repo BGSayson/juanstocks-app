@@ -1,12 +1,12 @@
-<div class="absolute w-full flex items-center justify-center text-center top-0.5">
+<div class="absolute w-full flex items-center justify-center text-center top-0.5 z-10">
   <% if flash.any? %>
     <% flash.each do |type, msg| %>
       <% if type == "notice" %>
-          <div class="py-2 px-4 font-bold text-white bg-[green] w-[30%]">
+          <div class="py-2 px-4 font-bold text-white bg-[green]">
           <%= msg %>
           </div>
         <% else %>
-          <div class="py-2 px-4 font-bold text-white bg-[red] w-[30%]">
+          <div class="py-2 px-4 font-bold text-white bg-[red]">
           <%= msg %>
           </div>
       <% end %>
