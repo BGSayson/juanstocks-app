@@ -23,11 +23,11 @@ class TransactionsController < ApplicationController
   def create
     if current_user_is_buyer_broker
       @wallet = current_user.wallet
-      puts transaction_params
         @transaction = @wallet.transactions.build(transaction_params)
 
       if @transaction.save
         redirect_to wallet_path(@wallet.id)
+        flash[:notice] = "Transaction Successful"
       else
         flash[:alert] = @transaction.errors.messages
         render :new

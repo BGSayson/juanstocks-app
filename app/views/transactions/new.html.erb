@@ -7,12 +7,20 @@
       <%= form_with model: [@wallet, @wallet.transactions.build], data: { controller: "toggle", action: "change->toggle#hide"}, html: { class: "h-full flex flex-col items-center justify-center w-[50%]" }, local: true do |f| %>
         <p class="flex flex-col items-center justify-center">
           <%= f.label "Choose transaction type", class: "bg-[#8B7DC3] text-white m-2 p-4 rounded-[20px] font-bold text-[3rem]" %> <br/>
-          <%= f.select :transaction_type, 
-            [["Select Transaction Type"],["Buy", "buy"], 
-            ["Sell", "sell"],
-            ["Withdraw", "withdraw"],
-            ["Deposit","deposit"]], 
-            { selected: params[:transaction_type] },  {data: { 'toggle-target': "select" }, class: "bg-[white] border-[#454545] border-[2px] text-[#454545] m-2 p-4 rounded-[10px] font-bold text-[2rem]" } %>
+          <% if current_user.user_status == 'buyer_broker' %>
+            <%= f.select :transaction_type, 
+              [["Select Transaction Type"],["Buy", "buy"], 
+              ["Sell", "sell"],
+              ["Withdraw", "withdraw"],
+              ["Deposit","deposit"]], 
+              { selected: params[:transaction_type] },  {data: { 'toggle-target': "select" }, class: "bg-[white] border-[#454545] border-[2px] text-[#454545] m-2 p-4 rounded-[10px] font-bold text-[2rem]" } %>
+          <% else %>
+            <%= f.select :transaction_type, 
+              [["Select Transaction Type"],["Buy", "buy"], 
+              ["Withdraw", "withdraw"],
+              ["Deposit","deposit"]], 
+              { selected: params[:transaction_type] },  {data: { 'toggle-target': "select" }, class: "bg-[white] border-[#454545] border-[2px] text-[#454545] m-2 p-4 rounded-[10px] font-bold text-[2rem]" } %>
+          <% end %>
         </p>
 
         <%# show if transaction_type is buy or sell %>
