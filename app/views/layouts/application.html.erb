@@ -24,8 +24,7 @@
   </head>
 
   <body class="h-[100vh] p-0 m-0">
-    <p class="bg-[#FFA62B] text-center"><%= notice %></p>
-    <p class="bg-[#FFA62B] text-center"><%= alert %></p>
+    <%= render "shared/flash"%>
     <%= yield %>
   </body>
 </html>

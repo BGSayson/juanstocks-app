@@ -1,0 +1,32 @@
+<div class="<%=gridParent%> bg-white">
+
+  <div class="<%=gridChild%>">
+    <%= render "shared/navbar" %>
+
+    <div class="flex flex-col items-center justify-center h-full text w-full gap-2">
+      <div class="bg-[#8B7DC3] text-white m-2 p-6 rounded-[20px] font-bold text-[3rem]">User Information:</div>
+
+      <div class="bg-[#f1eff7] text-[#454545] m-2 p-4 rounded-[20px] font-bold text-[1.8rem] flex flex-col items-center justify-center">
+          <% if current_user.user_status == "buyer_only" %>
+            <div class="flex items-center justify-center gap-2">
+              <div><strong>Verification:</strong> Buyer Only |</div>
+            <%= button_to "Apply for verification here", verify_user_path(current_user.id), method: :post, class: "hover:cursor-pointer hover:underline text-[hsl(120,66%,42%)]" %>
+            </div>
+          <% elsif current_user.user_status == "pending" %>
+            <div><strong>Verification:</strong> <span class="text-[orange]">Pending</span></div>
+          <% elsif current_user.user_status == "buyer_broker" %>
+          <div class=" font-bold underline text-[green]">Verified</div>
+          <% end %>
+
+          <div><strong>First Name:</strong> <%= current_user.first_name%></div>
+          <div><strong>Last Name:</strong> <%= current_user.last_name%></div>
+          <div><strong>Email Name:</strong> <%= current_user.email%></div>
+          <div><strong>Account creation date:</strong> <%= current_user.created_at.localtime.to_formatted_s(:nice) %></div>
+      </div>
+
+      <%= link_to "Edit user details?", edit_user_registration_path(current_user), class: "rounded-[30px] bg-[#FFA62B] p-4 pl-7 pr-7 text-white text-[1.8rem] font-bold hover:bg-[#F58E00]" %>
+
+    </div>
+  </div>
+</div>
+

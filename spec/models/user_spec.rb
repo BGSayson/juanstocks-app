@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   # pending "add some examples to (or delete) #{__FILE__}"
   before :all do
-    @user = User.new(email: "test_one@test.com", password: "test_one_password", first_name:"Bien", last_name:"Sayson", user_status: 1, user_role: 1)
+    @user = User.new(email: "test_one@test.com", password: "test_one_password", first_name: "Bien", last_name: "Sayson", user_status: 1, user_role: 1)
     Money.rounding_mode = BigDecimal::ROUND_HALF_UP
     Money.locale_backend = nil
   end
@@ -27,21 +27,21 @@ RSpec.describe User, type: :model do
 
     # devise automatically disallows emails and passwords to be blank
     it "has an email that cannot be blank" do
-      user = User.new(email: "", password: "test_one_password", first_name:"Bien", last_name:"Sayson", user_status: 1, user_role: 1)
+      user = User.new(email: "", password: "test_one_password", first_name: "Bien", last_name: "Sayson", user_status: 1, user_role: 1)
       expect(user).not_to be_valid
     end
 
     it "has a password that cannot be blank" do
-      user = User.new(email: "test@test.com", password: "", first_name:"Bien", last_name:"Sayson", user_status: 1, user_role: 1)
+      user = User.new(email: "test@test.com", password: "", first_name: "Bien", last_name: "Sayson", user_status: 1, user_role: 1)
       expect(user).not_to be_valid
     end
 
     it "has a password with at least 6 characters" do
-      user = User.new(email: "test@test.com", password: "asdf", first_name:"Bien", last_name:"Sayson", user_status: 1, user_role: 1)
+      user = User.new(email: "test@test.com", password: "asdf", first_name: "Bien", last_name: "Sayson", user_status: 1, user_role: 1)
       expect(user).not_to be_valid
     end
 
-    # enum attribute inherently disallows assigning values that are not assigned in the enum 
+    # enum attribute inherently disallows assigning values that are not assigned in the enum
     it "has a valid user status" do
       # expect(@user.user_status).to eq(1)
       expect(@user.user_status_before_type_cast).to eq(1)
@@ -56,7 +56,7 @@ RSpec.describe User, type: :model do
 
   context "associations" do
     it "has one wallet" do
-      wallet = Wallet.new(balance: Money.from_cents(100,"PHP"), user: @user)
+      wallet = Wallet.new(balance: Money.from_cents(100, "PHP"), user: @user)
       expect(@user.wallet.balance.format).to eq("₱1.00")
       expect(wallet.user).to eq(@user)
     end

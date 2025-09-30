@@ -8,36 +8,36 @@ class Wallet < ApplicationRecord
     # withdraws/subtracts amount from the wallet
     # balance and amount checking is done with update_wallet so it's okay if it's negative. it will be caught by update_wallet's error handling
     self.balance = self.balance - amount
-    return self.balance
+    self.balance
   end
 
   def deposit(amount)
     # deposits/adds amount from the wallet
     # balance and amount checking is done with update_wallet so it's okay if it's negative. it will be caught by update_wallet's error handling
     self.balance = self.balance + amount
-    return self.balance
+    self.balance
   end
 
   def add_investment(share_amount, stock_symbol)
     # retrieve specific stock object from the stock table by searching with stock_symbol
     stock_data = Stock.find_by(symbol: stock_symbol)
-    
+
     # retrieve stock price from stock_data object
     stock_price = stock_data.current_price
-    
+
     # create a new investment
     # total_share_amount : share_amount <= from method params
     # buying_price : stock_price <= from retrieved data
     # stock_id : stock_data.id <= from retrieved data
     investment = self.investments.create(total_share_amount: share_amount, buying_price: stock_price, stock_id: stock_data.id)
-    
+
     # price to be charged to the user
     price = share_amount * stock_price
-    
+
     # return an array
     # investment.id : to update transaction table for accurate data reflection
     # price : USD currency which will be auto-converted to wallet's PHP currency
-    return [investment.id, price]
+    [ investment.id, price ]
   end
 
   def remove_investment(investment_id, share_amount, stock_symbol)
@@ -46,13 +46,13 @@ class Wallet < ApplicationRecord
 
     # delete_this_investment : a boolean to tell transaction if the investment object should be deleted
     delete_this_investment = false
-    
+
     # if total_share_amount is more than the share_amount that will be sold by the user
-    if (investment_data.total_share_amount > share_amount)
+    if investment_data.total_share_amount > share_amount
       new_share_amount = investment_data.total_share_amount - share_amount
       # updates investment_data object with the new share amount
       investment_data.update!(total_share_amount: new_share_amount)
-    elsif (investment_data.total_share_amount == share_amount)
+    elsif investment_data.total_share_amount == share_amount
       # if total_share_amount is equal to share_amount, the object should be deleted
       delete_this_investment = true
     else
@@ -69,14 +69,14 @@ class Wallet < ApplicationRecord
     # return an array
     # price : USD currency which will be auto-converted to wallet's PHP currency
     # delete_this_investment : boolean that tells the transaction controller if the current investment should be deleted
-    return [price, delete_this_investment]
+    [ price, delete_this_investment ]
   end
 
   def balance_is_negative
     if self.balance < 0
-      return true
+      true
     else
-      return false
+      false
     end
   end
 end

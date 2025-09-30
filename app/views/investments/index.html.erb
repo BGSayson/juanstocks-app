@@ -1,2 +1,36 @@
-<h1> Investments </h1>
-<p><%= @investments.count %></p>
+<div class="<%=gridParent%>">
+  <div class="<%=gridChild%>">
+    
+    <%# GRID 1 %>
+    <%= render "shared/navbar" %>
+
+    <%# GRID 2%>
+    <div class="w-full h-full flex flex-col items-center justify-evenly px-8 text-[#454545]">
+        <% if current_user.wallet.investments != [] %>
+        <%else%>
+          <div class="rounded-[30px] bg-[#FFA62B] p-4 pl-7 pr-7 text-white text-[3rem] font-bold hover:bg-[#F58E00] mt-2"> User has no Investments yet!</div>
+        <%end%>
+        <h2 class="bg-[#8B7DC3] text-white m-2 p-4 rounded-[20px] font-bold text-[4rem]">Your Portfolio</h2>
+          <table class="bg-[white] rounded-[15px] p-5 w-[75%]">
+              <thead class="p-5">
+                  <tr class="border-b-[5px] rounded-[20px] border-[#8B7DC3] text-[2rem] m-5 mb-4 text-[#89898c] text-center">
+                      <th class="p-3 pb-2">Company Name</th>
+                      <th class="p-3 pb-2">Share Amount</th>
+                      <th class="p-3 pb-2">Buying Price</th>
+                      <th class="p-3 pb-2">Date purchased</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% @investments.each do |investment| %>
+                  <tr class="border-b-[#f1eff7] border-b-[3px] text-[#454545] font-bold text-center text-[1.4rem]">
+                    <td class="m-2 p-2"><%= Stock.find(investment.stock_id).description %></td>
+                    <td class="m-2 p-2"><%= investment.total_share_amount %></td>
+                    <td class="m-2 p-2"><%= investment.buying_price.format %></td>
+                    <td class="m-2 p-2"><%= investment.created_at.localtime.to_formatted_s(:nice) %></td>
+                    <td class="m-2 p-2"><%= link_to "Sell", new_wallet_transaction_path(current_user.wallet.id, transaction_type: "sell"), class: "text-[#8B7DC3] hover:underline hover:cursor-pointer" %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+          </table>
+      </div>
+</div>

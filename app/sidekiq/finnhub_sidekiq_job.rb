@@ -21,10 +21,10 @@ class FinnhubSidekiqJob
             data = client.quote(stock.symbol)
             puts data
             sleep(1.1) # Stay under the 60 calls/minute rate limit.
-            data 
+            data
           end
           # cp2 = Rails.cache.fetch("stock-company-profile2-#{stock.symbol}", expires_in: 3.minutes) do
-          
+
           # If there was a "cache hit", the code above instantly returns the cached value
           # from Redis, and the block is completely skipped.
           # Now, update the database with the (potentially cached) quote data.

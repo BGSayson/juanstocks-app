@@ -1,0 +1,24 @@
+    <div class="grid1 h-full bg-[#8B7DC3] font-bold text-white flex flex-col items-center justify-between">
+      
+      <div class="fixed h-screen flex flex-col items-center justify-between pt-5 pb-5 ">
+        <div class="flex items-center justify-center gap-2 p-3 text-[2rem]">
+          <img src="<%= image_path('icons/JuanStocksIcon.png')%>" class="max-w-[40px] max-h-[40px]">
+          <div >JuanStocks</div>
+        </div>
+
+        <div class="flex flex-col items-center justify-center w-full">
+          <div class="flex flex-col items-start justify-start">
+            <div class="<%=navbar_icons%>"><img src="<%= image_path('icons/Dashboard.png')%>" class="max-w-[40px] max-h-[40px] text-[2rem]"><div class="text-[1.6rem]"><%= link_to "Dashboard", dashboard_path %></div></div>
+            <div class="<%=navbar_icons%>"><img src="<%= image_path('icons/Stock Market.png')%>" class="max-w-[40px] max-h-[40px] text-[2rem]"><div class="text-[1.6rem]"><%= link_to "Stock Market", stocks_path %></div></div>
+            <div class="<%=navbar_icons%>"><img src="<%= image_path('icons/Wallet.png')%>" class="max-w-[40px] max-h-[40px] text-[2rem]"><div class="text-[1.6rem]"><%= link_to "Wallet", wallet_path(current_user.id) %></div></div>
+            <div class="<%=navbar_icons%>"><img src="<%= image_path('icons/Portfolio.png')%>" class="max-w-[40px] max-h-[40px] text-[2rem]"><div class="text-[1.6rem]"><%= link_to "Portfolio", wallet_investments_path(current_user.id) %></div></div>
+            <div class="<%=navbar_icons%>"><img src="<%= image_path('icons/User Profile.png')%>" class="max-w-[40px] max-h-[40px] text-[2rem]"><div class="text-[1.6rem]"><%= link_to "User Profile", user_profile_path %></div></div>
+          </div>
+        </div>
+
+          <div class="flex items-center justify-center text-[1.28rem] w-[50%]">
+            <img src="<%= image_path('icons/Sign Out.png')%>" class="max-w-[30px] max-h-[30px]">
+            <div><%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "hover:underline hover:cursor-pointer" %></div>
+          </div>
+      </div>
+    </div>

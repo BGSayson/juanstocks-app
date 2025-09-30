@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  
+
   root "welcome#index"
   get "dashboard" => "dashboard#index", as: :dashboard
 
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     registrations: "users/registrations",
     sessions: "users/sessions"
   }
-  
+
   resources :admins, shallow: true do
     resources :users
   end
@@ -32,12 +32,13 @@ Rails.application.routes.draw do
   get "/view_transaction/:id" => "admins#view_transaction", as: "view_transaction"
   post "/users/:id" => "users#confirm_user", as: "confirm_user"
   post "/users/:id/verify_user" => "dashboard#verify_user", as: "verify_user"
-  
-  resources :wallets, only:[:show], shallow: true do
-    resources :transactions, only:[:index, :show, :new, :create]
-    resources :investments, only:[:index, :show]
+
+  resources :wallets, only: [ :show ], shallow: true do
+    resources :transactions, only: [ :index, :show, :new, :create ]
+    resources :investments, only: [ :index, :show ]
   end
 
-  resources :stocks, only:[:show, :index]
+  resources :stocks, only: [ :show, :index ]
 
+  get "/user_profile" => "dashboard#user_profile", as: "user_profile"
 end

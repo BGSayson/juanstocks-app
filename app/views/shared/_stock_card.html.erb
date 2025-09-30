@@ -1,0 +1,40 @@
+<div class="grid grid-cols-2 items-center justify-center gap-2 p-5">
+
+  <div class="grid1 h-auto overflow-visible whitespace-nowrap">
+    <div class="flex items-center justify-start w-full gap-3">
+        <div class="rounded-[50%]"><%= image_tag stock.display_symbol, class: "rounded-[50%] max-w-[70px]" %></div>
+        <div class="font-bold border-[1px] rounded-[4px] text-[1.4rem] pl-2 pr-2 pt-0 pb-0"><%= stock.symbol %></div>
+        <div class="font-bold text-[2rem] whitespace-nowrap"><%= stock.description %></div>
+    </div>
+
+      <div class="flex items-center justify-start gap-4 w-full pt-2 pb-2 h-full">
+
+        <div class="Labels gap-2 p-3 h-full font-[500] text-[1.2rem]">
+          <div>High Price of the Day</div>
+          <div>Low Price of the Day</div>
+          <div>Open Price of the Day</div>
+          <div>Previous Closing Price</div>
+        </div>
+
+        <div class="Data gap-2 h-full text-[1.2rem] font-[500]">
+          <div>$ <%= round_off(stock.high_price_of_the_day_cents) %></div>
+          <div>$ <%= round_off(stock.low_price_of_the_day_cents) %></div>
+          <div>$ <%= round_off(stock.open_price_of_the_day_cents) %></div>
+          <div>$ <%= round_off(stock.previous_close_price_cents) %></div>
+        </div>
+      </div>
+
+  </div>
+    
+  <div class="grid2 flex items-end h-full pb-0 mb-0">
+      <div class="flex items-end justify-center gap-2 w-full h-full">
+        <div class="text-[2.5rem] font-bold">$<%= round_off(stock.high_price_of_the_day_cents) %></div>
+        <% if stock.percent_change.negative? %>
+        <div class="bg-[hsl(0,54%,52%)] text-white flex p-2 rounded-[5px] items-center justify-center gap-1 font-bold"><img src="<%= image_path('icons/Polygon_1.png')%>"><%= stock.percent_change.round(2) %></div>
+        <% else %>
+        <div class="bg-[hsl(120,40%,50%)] text-white flex p-2 rounded-[5px] items-center justify-center gap-1 font-bold"><img src="<%= image_path('icons/Polygon_1.png')%>" class="text-white max-h-3 max-w-3"><%= stock.percent_change.round(2) %></div>
+        <% end %>
+    </div>
+  </div>
+
+</div>

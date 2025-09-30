@@ -8,19 +8,22 @@ class DashboardController < ApplicationController
   # end
 
   def index
+    @top_stocks = Stock.top_stocks
+    @top_investments = current_user.wallet.investments.first(5)
+    @recent_txs = current_user.wallet.transactions.recent_txs.first(8)
   end
 
   def verify_user
     if is_user_buyer_only
       puts "is_user_broker : #{is_user_buyer_only}"
       @user = User.find(current_user.id)
-      if @user.update(user_status: "buyer_broker")
-        flash[:alert] = "User verified!"
+      if @user.update(user_status: "pending")
+        flash[:notice] = "Verification now pending. Your application will be reviewed by our specialists."
         redirect_to dashboard_path
-        return
+        nil
       end
 
-    else 
+    else
       flash[:alert] = "HUHHHHHHHH"
       redirect_to dashboard_path
     end

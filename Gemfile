@@ -17,7 +17,7 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-gem 'finnhub_ruby', '~> 2.0', '>= 2.0.1'
+gem "finnhub_ruby", "~> 2.0", ">= 2.0.1"
 gem "money-rails"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
@@ -32,11 +32,11 @@ gem "solid_queue"
 gem "solid_cable"
 
 # Used for active jobs instead of solid cache
-gem 'redis', '~> 5.4', '>= 5.4.1'
-gem 'redis-client', '~> 0.25.3'
+gem "redis", "~> 5.4", ">= 5.4.1"
+gem "redis-client", "~> 0.25.3"
 
 # Gem to run Active Jobs concurrenntly or properly queue them by using Sidekiq as the Active Job Adapter
-gem 'sidekiq'
+gem "sidekiq"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -59,9 +59,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-  gem 'rspec-rails'
-  gem 'factory_bot_rails'
-  gem 'rails-controller-testing'
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "rails-controller-testing"
 end
 
 group :development do
@@ -79,6 +79,6 @@ end
 gem "devise"
 gem "devise-jwt"
 gem "dotenv-rails"
-gem 'httparty'
+gem "httparty"
 gem "tailwindcss-rails"
 gem "tailwindcss-ruby"
