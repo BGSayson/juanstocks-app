@@ -7,8 +7,8 @@ RSpec.describe "Users", type: :request do
   include Devise::Test::IntegrationHelpers
 
   # let(:testadmin) { User.new(first_name: "Kelcie", last_name: "Lord", user_role: 1, user_status: 1 ) }
-  
-  let(:testbuyer) { create(:user, user_role: :buyer)}
+
+  let(:testbuyer) { create(:user, user_role: :buyer) }
 
   context "Access to Trader Dashboard" do
     it "Must direct you to dashboard page" do
@@ -17,6 +17,4 @@ RSpec.describe "Users", type: :request do
       expect(response).to have_http_status(:success)
     end
   end
-
-  
 end

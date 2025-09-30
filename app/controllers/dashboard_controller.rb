@@ -17,10 +17,10 @@ class DashboardController < ApplicationController
       if @user.update(user_status: "buyer_broker")
         flash[:alert] = "User verified!"
         redirect_to dashboard_path
-        return
+        nil
       end
 
-    else 
+    else
       flash[:alert] = "HUHHHHHHHH"
       redirect_to dashboard_path
     end

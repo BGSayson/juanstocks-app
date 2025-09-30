@@ -22,7 +22,7 @@ class UsersController < ApplicationController
 
   def all_pending_users
     if is_user_admin
-      @users = User.where(user_status: 'pending')
+      @users = User.where(user_status: "pending")
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end
@@ -35,14 +35,14 @@ class UsersController < ApplicationController
       if @user.confirm
         flash[:notice] = "User email confirmed successfully"
         redirect_to user_path(@user)
-        return
+        nil
       else
         render :show
       end
     end
   end
 
-  
+
   def new
     if is_user_admin
       @user = User.new
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
           flash[:notice] = "User created successfully and email is simultaneously confirmed"
           redirect_to user_path(@user) and return
         end
-       else
+      else
         if @user.save
           flash[:notice] = "User created successfully"
           redirect_to user_path(@user) and return
@@ -87,24 +87,24 @@ class UsersController < ApplicationController
       if @user.update(user_params)
         flash[:notice] = "User credentials changed successfully"
         redirect_to user_path(@user)
-        return
+        nil
       else
         flash[:alert] = "User credentials couldn't be saved"
         redirect_to edit_user_path(@user)
-        return
+        nil
       end
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end
   end
-  
+
   def destroy
     if is_user_admin
       @user = User.find(params[:id])
 
       if @user.destroy
         redirect_to all_users_path
-        return 
+        nil
       else
         p @user.errors.messages
       end
@@ -115,7 +115,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :user_role, :user_status, :email, :password, )
+    params.require(:user).permit(:first_name, :last_name, :user_role, :user_status, :email, :password,)
   end
 
   def is_user_admin

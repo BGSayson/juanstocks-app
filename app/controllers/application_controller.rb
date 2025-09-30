@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
       admins_path
     else
       dashboard_path
-    end 
+    end
   end
 
   def after_sign_up_path_for(resource)
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   # OpenexchangerateJob.perform_later
   # FinnhubJob.perform_later
 
-  # Sidekiq 
+  # Sidekiq
   # ExchangeRateJob.perform_async
   # FinnhubSidekiqJob.perform_async
 end

@@ -10,12 +10,12 @@
 puts "Getting Stock Data from Finnhub"
 
 def stocks_dataset
-  nasdaq_top_thirty = ['NVDA', 'MSFT', 'AAPL', 'AMZN', 'JPM', 'WMT', 'V', 'JNJ', 'HD', 'PG', 'CVX', 'UNH', 'KO', 'CSCO', 'GS', 'IBM', 'AXP', 'CRM', 'CAT', 'MCD', 'DIS', 'MRK', 'VZ', 'BA', 'AMGN', 'HON', 'NKE', 'SHW', 'MMM', 'TRV']
+  nasdaq_top_thirty = [ 'NVDA', 'MSFT', 'AAPL', 'AMZN', 'JPM', 'WMT', 'V', 'JNJ', 'HD', 'PG', 'CVX', 'UNH', 'KO', 'CSCO', 'GS', 'IBM', 'AXP', 'CRM', 'CAT', 'MCD', 'DIS', 'MRK', 'VZ', 'BA', 'AMGN', 'HON', 'NKE', 'SHW', 'MMM', 'TRV' ]
 
   begin
     finnhub_client = FinnhubRuby::DefaultApi.new
     nasdaq_top_thirty.each do |symbol|
-      company_profile = finnhub_client.company_profile2({symbol: symbol}) # fetches company profile | required : symbol
+      company_profile = finnhub_client.company_profile2({ symbol: symbol }) # fetches company profile | required : symbol
       puts "fetching data for #{company_profile['name']}"
       sleep(1.1)
       stock_quote = finnhub_client.quote(symbol) # fetches stock quote | required : symbol

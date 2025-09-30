@@ -3,9 +3,9 @@ class AdminsController < ApplicationController
 
   def index
     if is_user_admin
-      @users = User.where.not(user_role: 'admin')
-      @buyers = User.where(user_role: 'buyer').or(User.where(user_role: 'broker'))
-      @brokers = User.where(user_role: 'broker')
+      @users = User.where.not(user_role: "admin")
+      @buyers = User.where(user_role: "buyer").or(User.where(user_role: "broker"))
+      @brokers = User.where(user_role: "broker")
       @transactions = Transaction.all
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
@@ -14,7 +14,7 @@ class AdminsController < ApplicationController
 
   def all_users
     if is_user_admin
-      @users = User.where.not(user_role: 'admin')
+      @users = User.where.not(user_role: "admin")
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end
@@ -30,7 +30,7 @@ class AdminsController < ApplicationController
 
   def all_admins
     if is_user_admin
-      @admins = User.where(user_role: 'admin')
+      @admins = User.where(user_role: "admin")
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end
@@ -51,7 +51,6 @@ class AdminsController < ApplicationController
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end
-
   end
 
   def show
@@ -63,7 +62,7 @@ class AdminsController < ApplicationController
   end
 
   def new
-    if is_user_admin 
+    if is_user_admin
       @admin = User.new
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
@@ -80,7 +79,7 @@ class AdminsController < ApplicationController
         flash[:notice] = "User created successfully and email is simulatenously confirmed"
         redirect_to all_users_path
         return
-       else
+      else
         @admin.save
         render all_users_path
         return
@@ -105,17 +104,17 @@ class AdminsController < ApplicationController
       if @user.update(user_params)
         flash[:notice] = "User credentials changed successfully"
         redirect_to user_path(@user)
-        return
+        nil
       else
         flash[:alert] = "User credentials couldn't be saved"
         redirect_to edit_user_path(@user)
-        return
+        nil
       end
     else
       redirect_to dashboard_path, alert: "User is unauthorized"
     end
   end
-  
+
   def destroy
     if is_user_admin
       @admin = User.find(params[:id])

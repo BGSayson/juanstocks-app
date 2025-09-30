@@ -48,5 +48,4 @@ class TransactionsController < ApplicationController
     @wallet = current_user.wallet
     redirect_to wallet_path(@wallet.id)
   end
-
 end

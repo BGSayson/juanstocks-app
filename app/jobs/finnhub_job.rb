@@ -25,7 +25,7 @@ class FinnhubJob < ApplicationJob
           data # Return the data to be cached.
         end
         # cp2 = Rails.cache.fetch("stock-company-profile2-#{stock.symbol}", expires_in: 3.minutes) do
-        
+
         # If there was a "cache hit", the code above instantly returns the cached value
         # from Redis, and the block is completely skipped.
 
