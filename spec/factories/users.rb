@@ -9,6 +9,4 @@ FactoryBot.define do
     user_status { :buyer_only }
     confirmed_at { Time.now }
   end
-  
-
 end

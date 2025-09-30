@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "Stocks", type: :request do
   include Devise::Test::IntegrationHelpers
   # pending "add some examples (or delete) #{__FILE__}"
-  let(:test_stock) { create(:stock)}
-  let(:test_user) {create(:user, user_role: :broker)}
+  let(:test_stock) { create(:stock) }
+  let(:test_user) { create(:user, user_role: :broker) }
 
   context "Routing" do
     it "stock index view" do

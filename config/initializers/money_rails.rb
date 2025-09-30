@@ -1,6 +1,6 @@
 Money.rounding_mode = BigDecimal::ROUND_HALF_UP
 Money.locale_backend = :i18n
-Money.default_currency= 'USD'
+Money.default_currency= "USD"
 
 # opexr_fetch_response = HTTParty.get("https://v6.exchangerate-api.com/v6/#{ENV["OPEXRATES_API_KEY"]}/pair/USD/PHP")
 # if opexr_fetch_response['result'] == "success"

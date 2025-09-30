@@ -1,48 +1,52 @@
-<div>
-<%= form_with model: [@wallet, @wallet.transactions.build], local: true do |f| %>
-  <p>
-    <%= f.radio_button :transaction_type, 'buy'%>
-    <%= f.label :transaction_type, "Buy" %> <br/>
-    <%= f.radio_button :transaction_type, 'sell'%>
-    <%= f.label :transaction_type, "Sell" %> <br/>
-    <%= f.radio_button :transaction_type, 'withdraw'%>
-    <%= f.label :transaction_type, "Withdraw" %> <br/>
-    <%= f.radio_button :transaction_type, 'deposit'%>
-    <%= f.label :transaction_type, "Deposit" %>
-    <%# f.select :transaction_type, 
-      [["Buy", "buy"], 
-      ["Sell", "sell"],
-      ["Withdraw", "withdraw"],
-      ["Deposit","deposit"]], 
-      selected: 3 %>
-  </p>
+<div class="<%=gridParent%>">
 
-  <%# show if transaction_type is buy or sell %>
-  <p>
-    <%= f.label :share_amount %> <br/>
-    <%= f.number_field :share_amount, in: 1..20, step: 1 %>
-  </p>
+  <div class="<%=gridChild%>">
+    <%= render "shared/navbar" %>
 
-  <p>
-    <%= f.label :stock_symbol %> <br/>
-    <%= f.select :stock_symbol, options_from_collection_for_select(Stock.all, :symbol, :description) %>
-  </p>
+    <div class="flex flex-col items-center justify-center overflow-y-auto h-full text w-full">
+      <%= form_with model: [@wallet, @wallet.transactions.build], data: { controller: "toggle", action: "change->toggle#hide"}, html: { class: "h-full flex flex-col items-center justify-center w-[50%]" }, local: true do |f| %>
+        <p class="flex flex-col items-center justify-center">
+          <%= f.label "Choose transaction type", class: "bg-[#8B7DC3] text-white m-2 p-4 rounded-[20px] font-bold text-[3rem]" %> <br/>
+          <%= f.select :transaction_type, 
+            [["Select Transaction Type"],["Buy", "buy"], 
+            ["Sell", "sell"],
+            ["Withdraw", "withdraw"],
+            ["Deposit","deposit"]], 
+            { selected: params[:transaction_type] },  {data: { 'toggle-target': "select" }, class: "bg-[white] border-[#454545] border-[2px] text-[#454545] m-2 p-4 rounded-[10px] font-bold text-[2rem]" } %>
+        </p>
 
-  <p>
-    <%= f.label :investment_id %> <br/>
-    <%= f.select :investment_id, options_from_collection_for_select(@wallet.investments, :id, :investment_display) %>
-  </p>
+        <%# show if transaction_type is buy or sell %>
+        <div class="<%=hiddenClassParent%>">
+          <p class="<%=hiddenClass%>" data-toggle-target="buySell">
+            <%= f.label :share_amount, class: "pb-1 text-[2rem]" %>
+            <%= f.number_field :share_amount, in: 1..20, step: 1, value: 1, class: "bg-[white] text-[#454545] border-[3px] rounded-[5px] border-[white] text-[2rem]"  %>
+          </p>
 
-  <p> <%# allow client editing if transaction_type is withdraw or deposit %>
-    <%# partial for withdraw or deposit %>
-    <%= f.label :price %> <br/>
-    <%= f.text_field :price %>
-  </p>
+          <p class="<%=hiddenClass%>" data-toggle-target="buyStock">
+            <%= f.label :stock_symbol, class: "pb-1 text-[2rem]" %>
+            <%= f.select :stock_symbol, options_from_collection_for_select(Stock.all, :symbol, :description), {}, { class: "bg-[white] border-[3px] rounded-[15px] border-[#8B7DC3] text-[2rem] text-center w-[65%] p-1 text-[#454545]" } %>
+          </p>
+          
+          <p class="<%=hiddenClass%>" data-toggle-target="investment">
+            <%= f.label :investment_id, class: "pb-1 text-[2rem]" %> 
+            <%# f.text_field :investment_id %>
+            <%= f.select :investment_id, options_from_collection_for_select(@wallet.investments, :id, :investment_display), {}, { class: "bg-[white] border-[3px] rounded-[15px] border-[#8B7DC3] text-[2rem] text-center w-[70%] p-1 text-[#454545]" } %>
+          </p>
+        </div>
 
-  <p>
-    <%= f.submit 'Create Transaction' %>
-  </p>
-<% end %>
+        <div class="<%=hiddenClassParent%>" data-toggle-target="withdrawDeposit">
+          <p class="<%=hiddenClass%>"  data-toggle-target="withdrawDepositMode"> <%# allow client editing if transaction_type is withdraw or deposit %>
+            <%# partial for withdraw or deposit %>
+            <%= f.label "Enter amount:", class: "pb-1 text-[2rem]" %>
+            <%= f.text_field :price, class: "border-[3px] rounded-[5px] border-[white] text-[2rem] text-center w-[40%] p-1" %>
+          </p>
+        </div>
 
-<%= button_to 'Back', wallet_path(@wallet.id), :method => "get" %>
+        <p data-toggle-target="submit" class="hidden">
+          <%= f.submit 'Create Transaction', class: "rounded-[30px] bg-[#FFA62B] p-4 pl-7 pr-7 text-white text-[1.8rem] hover:cursor-pointer font-bold hover:bg-[#F58E00]" %>
+        </p>
+      <% end %>
+    </div>
+  </div>
 </div>
+

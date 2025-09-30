@@ -25,7 +25,7 @@ class FinnhubJob < ApplicationJob
           data # Return the data to be cached.
         end
         # cp2 = Rails.cache.fetch("stock-company-profile2-#{stock.symbol}", expires_in: 3.minutes) do
-        
+
         # If there was a "cache hit", the code above instantly returns the cached value
         # from Redis, and the block is completely skipped.
 
@@ -37,7 +37,7 @@ class FinnhubJob < ApplicationJob
           high_price_of_the_day_cents:  quote["h"],
           low_price_of_the_day_cents:   quote["l"]
         )
-        rescue FinnhubRuby::ApiError => e
+        rescue StandardError => e
         Rails.logger.error "Finnhub API error for #{stock.symbol}: #{e.message}"
         next
       end

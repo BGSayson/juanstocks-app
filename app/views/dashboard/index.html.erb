@@ -1,40 +1,142 @@
-<% if current_user.user_status == "buyer_only" %>
-<%= current_user.id %>
-<%# FOR BROKER APPLICATION %>
-<h1>Verify now to become a broker! <%= button_to "click here", verify_user_path(current_user.id), method: :post %></h1>
-<% end %>
-<div >Hello trader</div> <%= current_user.first_name%>
-<%= button_to "Sign out", destroy_user_session_path, method: :delete  %>
+<div class="<%=gridParent%>">
+  <div class="m-auto grid grid-cols-[0.39fr_1fr_1fr] w-full h-full">
+    
+    <%# GRID 1 %>
+    <%= render "shared/navbar" %>
 
-<%# STIMULUS TEST ELEMENTS %>
-<div>
+    <%# GRID 2 %>
+    <div class="grid2 w-full h-full flex flex-col items-center justify-evenly px-8 text-[#454545]">
 
-  <%# ALERT %>
-  <div data-controller="alert">
-      <button data-action="click->alert#show" style="color: red;">click me</button>
-      <div data-action="click->alert#huh">huh me</div>
+      <%# GREET %>
+      <div class="greeting w-full pb-3">
+        <div class="text-[3rem] font-bold">Hello, <%= current_user.first_name%></div>
+      </div>
+
+      <%# STOCK HIGHLIGHT %>
+      <div class="stock-highlight w-full">
+        <div class="text-[2rem] font-bold border-b-[5px] rounded-[5px] border-[#8B7DC3] w-full mb-5">Stock Highlight</div>
+        <div class="border-[5px] border-[#8B7DC3] p-4 rounded-[15px]">
+          <% stock = @top_stocks.first %>
+          <%= render "shared/stock_card", stock: stock  %>
+        </div>
+      </div>
+      <div class="top-investments w-full">
+        <% if current_user.wallet.investments != [] %>
+          <div class="w-full text-[2rem] font-bold pt-3">Top Investments</div>
+        <% else %>
+          <div> </div>
+        <%end %>
+        <table class="table-auto w-full">
+          <thead class="m-1 mb-3">
+            <tr class="border-b-[5px] rounded-[20px] border-[#8B7DC3] text-[1.4rem] m-5 mb-0 text-[#89898c]">
+              <th class="pb-2 pl-0 text-left">Company Name</th>
+              <th class="pb-2 text-center">Stock</th>
+              <th class="pb-2 text-center">Shares</th>
+              <th class="pb-2 text-center">Price</th>
+              <th class="pb-2 pr-0 text-right">Gain</th>
+            </tr>
+          </thead>
+
+          <%# TOP INVESTMENTS%>
+          <tbody class="text-[1.5rem] font-bold p-2 pt-3 mt-3">
+            <% if current_user.wallet.investments != [] %>
+              <% @top_investments.each do |inv| %>
+                <tr class="pt-2 gap-5">
+                  <td class="flex items-center justify-start gap-1 m-2 mt-3">
+                    <%= image_tag Stock.find(inv.stock_id).display_symbol, class: "rounded-[50%] max-w-[40px]" %> 
+                    <%= Stock.find(inv.stock_id).description %> 
+                  </td>
+                  <td><%= Stock.find(inv.stock_id).symbol %></td>
+                  <td><%= inv.total_share_amount %> </td>
+                  <td><%= round_off(inv.buying_price_cents) %> </td>
+                  <%# <td><%= Stock.find(inv.stock_id).percent_change.round(2) %>
+                    <% if Stock.find(inv.stock_id).percent_change.negative? %>
+                      <td>
+                        <div class="bg-[hsl(0,54%,52%)] text-white flex rounded-[12px] items-start justify-center gap-1 pt-1 pb-1">
+                          <div class="self-center pr-2">
+                            <img src="<%= image_path('icons/Polygon_1.png')%>" class="text-white max-h-5 max-w-5 ">
+                          </div>
+                          <%= Stock.find(inv.stock_id).percent_change.round(2) %>
+                        </div>
+                      </td>
+                    <% else %>
+                      <td>
+                        <div class="bg-[hsl(120,40%,50%)] text-white rounded-[12px] flex items-start justify-center gap-1 pt-1 pb-1">
+                          <div class="self-center pr-2">
+                            <img src="<%= image_path('icons/Polygon_1.png')%>" class="text-white max-h-5 max-w-5 self-center">
+                          </div>
+                          <%= Stock.find(inv.stock_id).percent_change.round(2) %>
+                          </div>
+                        </td>
+                    <% end %>
+                  </tr>
+              <% end %>
+            <% else %>
+            <div class="text-[2rem] text-center font-bold">No investments yet! Buy your first stock <%= link_to "here", new_wallet_transaction_path(current_user.wallet.id), class: "rounded-[30px] text-[#FFA62B] text-[1.8rem] font-bold hover:underline" %></div>
+            <% end %>
+          </tbody>
+        </table> 
+      </div>
+    </div>
+
+    <%# GRID 3 %>
+    <%# FIND A WAY TO PASS IN A PARAMETER, SO IT'S NOT HARDCODED TO TAKE IN CURRENT_USER AND MAKE IT SO THE PARTIAL IS THE WHOLE TABLE NOT JUST THE TR'S%>
+    <div class="grid3 h-full bg-[#f1eff7] flex flex-col items-center justify-evenly w-full text-[#89898c]" >
+
+      <div class="w-full flex flex-col items-center justify-center gap-2">
+        <div class="bg-[#8B7DC3] text-white m-4 p-4 pt-6 pb-6 rounded-[20px] flex flex-col justify-center items-center w-[90%]">
+          <div class="text-[2.8rem] self-start">Wallet Summary</div>
+          <div class="text-[4rem] self-end">₱ <%= round_off(current_user.wallet.balance_cents) %></div>
+        </div>
+        <div class="self-center mt-4 mb-2">
+          <%= link_to "New Transaction", new_wallet_transaction_path(current_user.wallet.id), class: "rounded-[30px] bg-[#FFA62B] p-4 pl-7 pr-7 text-white text-[1.8rem] font-bold hover:bg-[#F58E00]" %>
+        </div>
+      </div>
+
+      <div class="w-[90%]">
+        <div class="text-[2.8rem] font-bold text-[#454545] mb-1">Recent Transactions</div>
+          <table class="table-auto w-full">
+            <thead class="m-5">
+              <tr class="border-b-[5px] rounded-[20px] border-[#8B7DC3] text-[1.4rem] m-5 mb-4 text-[#89898c]">
+                <th class="pb-2 pl-0 text-left">Type</th>
+                <th class="pb-2 text-center">Stock</th>
+                <th class="pb-2 text-center">Shares</th>
+                <th class="pb-2 pr-0 text-right">Amount</th>
+              </tr>
+            </thead>
+            <%# RECENT TRANSACTIONS %>
+            <tbody class="text-[1.5rem] mt-3 font-bold p-3 pt-3 text-[#454545]">
+              <% if current_user.wallet.transactions != [] %>
+                <% @recent_txs.each do |tx| %>
+                  <tr class="pt-2 gap-5">
+                    <td class="p-1 m-2"><%= tx.transaction_type.capitalize %></td>
+                    <td class="p-1 m-2 text-center flex flex-col items-center justify-center">
+                      <% if tx.stock_symbol != nil %>
+                        <div class="p-1 pl-0 pr-0 border-[1.8px] rounded-[10px] w-[70%]"><%= tx.stock_symbol %></div>
+                      <% else %>
+                        <div class="flex-col items-center justify-center">-</div>
+                      <% end %>
+                    </td>
+                    <td class="p-1 m-2 text-center">
+                      <% if tx.share_amount != nil %>
+                        <%= tx.share_amount %> shares
+                      <% else %>
+                        <div class="flex-col items-center justify-center">-</div>
+                      <% end %>
+                      </td>
+                    <% if tx.transaction_type == "buy" || tx.transaction_type == "withdraw" %>
+                      <td class="p-1 m-2 text-[hsl(0,74%,57%)] text-right">-<%= tx.price.format %> </td>
+                    <% else %>
+                      <td class="p-1 m-2 text-[hsl(120,66%,42%)] text-right">+<%= tx.price.format %> </td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              <% else %>
+              <td class="text-[3rem] text-center">No transactions yet!</td>
+              <% end %>
+            </tbody>
+        </table>
+      </div>
+    </div>  
   </div>
-
-  <%# GREETER (IMPORTANT FOR TX FORM!!!) %>
-  <div data-controller="greeter">
-    <input type="text" data-greeter-target="name">
-    <button data-action="click->greeter#greet">Greet me </button>
-    <div data-greeter-target="output"></div>
-  </div>
-
-  <%# COUNTER %>
-  <div data-controller="counter"  data-counter-count-value="0">
-    <div data-counter-target="output"></div>
-    <button data-action="click->counter#addOne" style="color: blue;">click</button>
-  </div>
-
-  
-
 </div>
-
-<%# TESTING WALLET PATHS %>
-<% if(current_user.user_role == "admin" ) %>
-  <%= button_to "All Transactions", wallet_transactions_path(current_user.wallet.id), method: :get  %>
-<% else %>
-  <%= button_to "Wallet", wallet_path(current_user.wallet.id), method: :get  %>
-<% end %>
