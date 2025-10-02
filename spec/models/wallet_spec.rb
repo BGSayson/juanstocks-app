@@ -6,6 +6,7 @@ RSpec.describe Wallet, type: :model do
   let(:test_stock) { create(:stock) }
   let(:test_user) { create(:user) }
   let(:test_wallet) { create(:wallet, user: test_user) }
+  let(:test_investment) { create(:investment, wallet: test_wallet, stock_id: test_stock.id) }
 
   before :all do
     @user = User.new(email: "test_one@test.com", password: "test_one_password", first_name: "Bien", last_name: "Sayson", user_status: 1, user_role: 1)
@@ -29,19 +30,19 @@ RSpec.describe Wallet, type: :model do
   context "methods" do
     it "can deposit" do
       wallet = Wallet.new(balance: Money.from_cents(100, "PHP"), user: @user)
-      wallet.deposit(Money.from_cents(100, "PHP"))
+      wallet.add(Money.from_cents(100, "PHP"))
       expect(wallet.balance.format).to eq("₱2.00")
     end
 
     it "can withdraw" do
       wallet = Wallet.new(balance: Money.from_cents(100, "PHP"), user: @user)
-      wallet.withdraw(Money.from_cents(100, "PHP"))
+      wallet.subtract(Money.from_cents(100, "PHP"))
       expect(wallet.balance.format).to eq("₱0.00")
     end
 
     it "balance_is_negative returns true if balance is below 0" do
       wallet = Wallet.new(balance: Money.from_cents(100, "PHP"), user: @user)
-      wallet.withdraw(Money.from_cents(200, "PHP"))
+      wallet.subtract(Money.from_cents(200, "PHP"))
       expect(wallet.balance_is_negative).to eq(true)
     end
 
@@ -51,14 +52,21 @@ RSpec.describe Wallet, type: :model do
       expect(id_price_array[1]).to eq(Money.new(17667, 'USD'))
     end
 
-    it "can remove invesment" do
+    it "can add to existing investment" do
+      add_to_this_investment = test_wallet.investments.create!(total_share_amount: 1, buying_price: 1, stock_id: test_stock.id)
+      id_price_array = test_wallet.add_investment(1, test_stock.symbol)
+      expect(id_price_array[0]).to eq(add_to_this_investment.id)
+      expect(add_to_this_investment.total_share_amount).to eq(2)
+    end
+
+    it "can remove investment" do
       test_investment = test_wallet.investments.create(total_share_amount: 1, buying_price: 1, stock_id: test_stock.id)
       price_delete_array = test_wallet.remove_investment(test_investment.id, 1, test_stock.symbol)
       expect(price_delete_array[0]).to eq(Money.new(17667, 'USD'))
       expect(price_delete_array[1]).to eq(true)
     end
 
-    it "remove invesment failure : impossible share amount" do
+    it "remove investment failure : impossible share amount" do
       test_investment = test_wallet.investments.create(total_share_amount: 1, buying_price: 1, stock_id: test_stock.id)
       expect {
         price_delete_array = test_wallet.remove_investment(test_investment.id, 100, test_stock.symbol)

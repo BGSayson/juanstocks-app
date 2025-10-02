@@ -4,14 +4,14 @@ class Wallet < ApplicationRecord
   has_many :transactions
   has_many :investments
 
-  def withdraw(amount)
+  def subtract(amount)
     # withdraws/subtracts amount from the wallet
     # balance and amount checking is done with update_wallet so it's okay if it's negative. it will be caught by update_wallet's error handling
     self.balance = self.balance - amount
     self.balance
   end
 
-  def deposit(amount)
+  def add(amount)
     # deposits/adds amount from the wallet
     # balance and amount checking is done with update_wallet so it's okay if it's negative. it will be caught by update_wallet's error handling
     self.balance = self.balance + amount
@@ -25,19 +25,33 @@ class Wallet < ApplicationRecord
     # retrieve stock price from stock_data object
     stock_price = stock_data.current_price
 
+    investment_id = nil
+    existing_investment = nil
+    self.investments.each do |inv|
+      if Stock.find(inv.stock_id).symbol == stock_symbol
+        existing_investment = inv
+        break
+      end
+    end
+
     # create a new investment
     # total_share_amount : share_amount <= from method params
     # buying_price : stock_price <= from retrieved data
     # stock_id : stock_data.id <= from retrieved data
-    investment = self.investments.create(total_share_amount: share_amount, buying_price: stock_price, stock_id: stock_data.id)
-
+    if(existing_investment == nil)
+      investment = self.investments.create(total_share_amount: share_amount, buying_price: stock_price, stock_id: stock_data.id)
+      investment_id = investment.id
+    else
+      new_share_total = existing_investment.total_share_amount+share_amount
+      existing_investment.update(total_share_amount: new_share_total)
+      investment_id = existing_investment.id
+    end
     # price to be charged to the user
     price = share_amount * stock_price
-
     # return an array
     # investment.id : to update transaction table for accurate data reflection
     # price : USD currency which will be auto-converted to wallet's PHP currency
-    [ investment.id, price ]
+    [ investment_id, price ]
   end
 
   def remove_investment(investment_id, share_amount, stock_symbol)

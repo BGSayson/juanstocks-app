@@ -60,7 +60,7 @@ RSpec.describe Transaction, type: :model do
       transaction = Transaction.create(transaction_type: "buy", share_amount: 1, price: 10, stock_symbol: test_stock.symbol, investment_id: test_investment.id, wallet: test_wallet)
       expect(test_wallet.balance).to eq(Money.new(2333, 'PHP'))
       expect(transaction.reload.price).to eq(Money.new(17667, 'PHP'))
-      expect(transaction.reload.investment_id).not_to eq(test_investment.id)
+      expect(transaction.reload.investment_id).to eq(test_investment.id)
     end
 
     it "buy failure : cannot buy negative shares" do
@@ -79,6 +79,7 @@ RSpec.describe Transaction, type: :model do
 
     it "successful transaction_type : sell" do
       Money.add_rate('USD', 'PHP', 1.0)
+      test_user.update!(user_status: 'buyer_broker')
       transaction = Transaction.create(transaction_type: "sell", share_amount: 1, price: 10, stock_symbol: test_stock.symbol, investment_id: test_investment.id, wallet: test_wallet)
       expect(test_wallet.balance).to eq(Money.new(37667, 'PHP'))
       expect(transaction.reload.price).to eq(Money.new(17667, 'PHP'))
@@ -87,9 +88,17 @@ RSpec.describe Transaction, type: :model do
 
     it "sell failure : impossible share amount" do
       Money.add_rate('USD', 'PHP', 1.0)
+      test_user.update!(user_status: 'buyer_broker')
       expect {
         transaction = Transaction.create(transaction_type: "sell", share_amount: 10000, price: 10, stock_symbol: test_stock.symbol, investment_id: test_investment.id, wallet: test_wallet)
       } .to raise_error(an_instance_of(WalletError).and having_attributes(message: "Cannot sell more than total shares"))
+    end
+
+    it "sell failure : cannot sell as buyer only" do
+      Money.add_rate('USD', 'PHP', 1.0)
+      expect {
+        transaction = Transaction.create(transaction_type: "sell", share_amount: 10000, price: 10, stock_symbol: test_stock.symbol, investment_id: test_investment.id, wallet: test_wallet)
+      } .to raise_error(an_instance_of(WalletError).and having_attributes(message: "Cannot sell shares if not a broker"))
     end
 
     it "successful transaction_type : withdraw" do
