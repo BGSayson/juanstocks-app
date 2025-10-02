@@ -27,7 +27,7 @@
         <div class="<%=hiddenClassParent%>">
           <p class="<%=hiddenClass%>" data-toggle-target="buySell">
             <%= f.label :share_amount, class: "pb-1 text-[2rem]" %>
-            <%= f.number_field :share_amount, in: 1..20, step: 1, value: 1, class: "bg-[white] text-[#454545] border-[3px] rounded-[5px] border-[white] text-[2rem]"  %>
+            <%= f.number_field :share_amount, min: 1, step: 1, value: 1, class: "bg-[white] text-[#454545] border-[3px] rounded-[5px] border-[white] text-[2rem]"  %>
           </p>
 
           <p class="<%=hiddenClass%>" data-toggle-target="buyStock">

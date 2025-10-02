@@ -17,7 +17,7 @@
           <div class="flex flex-col items-center justify-center">
             <div class="font-bold text-[2.8rem]">Current Price:</div>
             <div class="font-bold text-[2.5rem]">
-              $ <%= @stock.current_price_cents %> 
+              <%= @stock.current_price.format %> 
             </div>
           </div>
 
@@ -57,8 +57,11 @@
         <div class="m-3 mt-5">
           <%= link_to "Buy", new_wallet_transaction_path(current_user.wallet.id, transaction_type: "buy"), 
           class: "rounded-[30px] bg-[#FFA62B] p-3 pl-5 pr-5 text-white text-[1.8rem] font-bold hover:bg-[#F58E00]" %>
+          <% if current_user.user_status != "buyer_broker" %>
+          <% else %>
           <%= link_to "Sell", new_wallet_transaction_path(current_user.wallet.id, transaction_type: "sell"), 
           class: "rounded-[30px] bg-[#FFA62B] p-3 pl-5 pr-5 text-white text-[1.8rem] font-bold hover:bg-[#F58E00]" %>
+          <% end %>
         </div>
 
       </div>

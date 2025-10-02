@@ -3,7 +3,7 @@
     <td class="m-2 p-2 w-[5%]"><%= image_tag stock.display_symbol, :class => "rounded-[50%]"  %> </td>
     <td class="m-2 p-2 "><%= stock.symbol %> </td>
     <td class="m-2 p-2 "><%= stock.description %> </td>
-    <td class="m-2 p-2 "><%= stock.current_price_cents %> </td>
+    <td class="m-2 p-2 "><%= stock.current_price.format %> </td>
     <td class="m-2 p-2 "><%= stock.change %> </td>
     <td class="m-2 p-2 "><%= stock.percent_change %> </td>
     <td class="m-2 p-2 "><%= stock.high_price_of_the_day_cents %> </td>
