@@ -1,8 +1,8 @@
-<div class="<%=admin_flex_col_container%> px-[1rem] mt-[1rem]">
+<div class="<%=devise_form_flex_col_container%> px-[1rem] mt-[1rem]">
   <h2 class="<%=admin_main_header%>">Change your password</h2>
   <div class="<%=admin_divider%>"></div>
 
-  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { class:admin_flex_col_container,method: :put }) do |f| %>
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { class:devise_form_flex_col_container,method: :put }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
     <%= f.hidden_field :reset_password_token %>
 

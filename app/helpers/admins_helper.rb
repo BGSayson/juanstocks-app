@@ -15,7 +15,7 @@ module AdminsHelper
     "flex flex-col gap-[1rem]"
   end
   def admin_main_header
-    "text-[21px] text-[#111] font-bold"
+    "text-[2rem] text-[#111] font-bold text-[#454545]"
   end
   def admin_dashboard_button
     "flex flex-row gap-[1rem] items-center-safe px-[1rem] py-[0.25rem] cursor-pointer bg-[#8B7DC3] hover:bg-[#FFA62B] font-bold text-white text-[16px]"

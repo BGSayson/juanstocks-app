@@ -27,7 +27,10 @@
                     <td class="m-2 p-2"><%= investment.total_share_amount %></td>
                     <td class="m-2 p-2"><%= investment.buying_price.format %></td>
                     <td class="m-2 p-2"><%= investment.created_at.localtime.to_formatted_s(:nice) %></td>
+                    <% if current_user.user_status != "buyer_broker" %>
+                    <% else %>
                     <td class="m-2 p-2"><%= link_to "Sell", new_wallet_transaction_path(current_user.wallet.id, transaction_type: "sell"), class: "text-[#8B7DC3] hover:underline hover:cursor-pointer" %></td>
+                    <% end %>
                   </tr>
                 <% end %>
               </tbody>

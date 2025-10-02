@@ -1,19 +1,27 @@
-<div class="<%=admin_flex_col_container%> px-[1rem] mt-[1rem]">
-  <h2 class="<%=admin_main_header%>">Resend confirmation instructions</h2>
-  <div class="<%=admin_divider%>"></div>
+<div class="<%= welcome_flex_col_container%>">
+  <div class="<%= welcome_flex_row_container_top%> sticky top-0 right-0 left-0">
+    <%= image_tag('icons/JuanStocksIcon.png', height:40, width:40) %>
+  </div>
+</div>
 
-  <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: {class:admin_flex_col_container, method: :post }) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
+<div class="<%=devise_form_flex_col_container%> px-[1rem] mt-[1rem]">
+  <div class="<%=devise_form_parent_container%>">
+    <h2 class="<%=admin_main_header%>">Resend confirmation instructions</h2>
+    <div class="<%=admin_divider%>"></div>
 
-    <div class="field">
-      <%= f.label :email %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: admin_form_field %>
-    </div>
+    <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: {class:devise_form_flex_col_container, method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
-    <div class="actions">
-      <%= f.submit "Resend confirmation instructions", class: welcome_primary_button %>
-    </div>
-  <% end %>
+      <div class="<%=devise_form_label_tf_div%>">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: admin_form_field %>
+      </div>
 
-  <%= render "devise/shared/links" %>
+      <div class="actions text-[1.5rem]">
+        <%= f.submit "Resend confirmation instructions", class: devise_form_buttons %>
+      </div>
+    <% end %>
+
+    <%= render "devise/shared/links" %>
+  </div>
 </div>
