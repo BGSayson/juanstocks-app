@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 
     def approve_application
     @user = User.find(params[:id])
-    
+
     if @user.user_status == "pending"
         @user.user_status = "buyer_broker"
 
@@ -58,7 +58,7 @@ class UsersController < ApplicationController
         flash[:alert] = "Error occurred"
         render :all_pending_users
       end
-    else 
+    else
       flash[:notice] = "Error occurred"
     end
   end

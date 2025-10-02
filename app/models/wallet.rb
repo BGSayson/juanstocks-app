@@ -38,7 +38,7 @@ class Wallet < ApplicationRecord
     # total_share_amount : share_amount <= from method params
     # buying_price : stock_price <= from retrieved data
     # stock_id : stock_data.id <= from retrieved data
-    if(existing_investment == nil)
+    if existing_investment == nil
       investment = self.investments.create(total_share_amount: share_amount, buying_price: stock_price, stock_id: stock_data.id)
       investment_id = investment.id
     else

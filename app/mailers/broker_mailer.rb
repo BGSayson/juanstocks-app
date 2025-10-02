@@ -5,6 +5,5 @@ class BrokerMailer < ApplicationMailer
     @user = params[:user]
     @url = "http://example.com/application_approved"
     mail(to: @user.email, subject: "Broker application approved!")
-
   end
 end

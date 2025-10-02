@@ -47,6 +47,24 @@ def stocks_dataset
     raise ActiveRecord::Rollback
   end
 end
+def admin_seed
+  puts "Seeding admin account..."
+  admin = User.create(
+    email: ENV["ADMIN_EMAIL"],
+    first_name: ENV["ADMIN_FIRST_NAME"],
+    last_name: ENV["ADMIN_LAST_NAME"],
+    password: ENV["ADMIN_PASSWORD"],
+    user_role: 'admin',
+    user_status: 'buyer_broker'
+  )
+  admin.skip_confirmation!
+  if admin.save
+    puts "Admin data seeded"
+  else
+    puts "Admin data not seeded"
+  end
+end
 
-stocks_dataset() unless Rails.env.test? 
+admin_seed() unless Rails.env.test?
+stocks_dataset() unless Rails.env.test?
 puts "Stock Data Seeded"

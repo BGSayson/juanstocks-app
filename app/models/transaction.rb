@@ -50,7 +50,7 @@ class Transaction < ApplicationRecord
         raise WalletError, "Balance cannot be less than or equal to zero"
       end
     when "sell"
-      if self.wallet.user.user_status == 'buyer_broker'
+      if self.wallet.user.user_status == "buyer_broker"
         # call sell and get the array [price, delete_this_investment, new_balance]
         sell_price_destroyed_array = self.sell(self.investment_id, self.share_amount, self.stock_symbol)
         new_balance = sell_price_destroyed_array[2]
