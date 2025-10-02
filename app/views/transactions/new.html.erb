@@ -46,7 +46,7 @@
           <p class="<%=hiddenClass%>"  data-toggle-target="withdrawDepositMode"> <%# allow client editing if transaction_type is withdraw or deposit %>
             <%# partial for withdraw or deposit %>
             <%= f.label "Enter amount:", class: "pb-1 text-[2rem]" %>
-            <%= f.text_field :price, class: "border-[3px] rounded-[5px] border-[white] text-[2rem] text-center w-[40%] p-1" %>
+            <%= f.number_field :price, in:1..1000000, step:1, value:1, class: "border-[3px] rounded-[5px] border-[white] text-[2rem] text-center w-[40%] p-1" %>
           </p>
         </div>
 
