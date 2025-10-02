@@ -12,7 +12,7 @@ class Transaction < ApplicationRecord
     # call add_investment of wallet and get the array [investment.id, price]
     id_price_array = self.wallet.add_investment(share_amount, stock_symbol)
     buy_price = id_price_array[1]
-    new_balance = self.wallet.withdraw(buy_price)
+    new_balance = self.wallet.subtract(buy_price)
     # return [investment.id, price, new_balance]
     # if new_balance isn't included in the return array, update_wallet will not know user's new balance after the buy transaction
     id_price_array << new_balance
@@ -22,7 +22,7 @@ class Transaction < ApplicationRecord
     # call remove_investment of wallet and get the array [price, delete_this_investment]
     sell_price_destroyed_array = self.wallet.remove_investment(investment_id, share_amount, stock_symbol)
     sell_price = sell_price_destroyed_array[0]
-    new_balance = self.wallet.deposit(sell_price)
+    new_balance = self.wallet.add(sell_price)
     # return [price, delete_this_investment, new_balance]
     # if new_balance isn't included in the return array, update_wallet will not know user's new balance after the sell transaction
     sell_price_destroyed_array << new_balance
@@ -50,20 +50,24 @@ class Transaction < ApplicationRecord
         raise WalletError, "Balance cannot be less than or equal to zero"
       end
     when "sell"
-      # call sell and get the array [price, delete_this_investment, new_balance]
-      sell_price_destroyed_array = self.sell(self.investment_id, self.share_amount, self.stock_symbol)
-      new_balance = sell_price_destroyed_array[2]
+      if self.wallet.user.user_status == 'buyer_broker'
+        # call sell and get the array [price, delete_this_investment, new_balance]
+        sell_price_destroyed_array = self.sell(self.investment_id, self.share_amount, self.stock_symbol)
+        new_balance = sell_price_destroyed_array[2]
 
-      target_investment = Investment.find(self.investment_id)
-      stock_symbol = Stock.find(target_investment.stock_id).symbol
-      # update transaction retroactively with the correct data, as the test form (23/09/2025) can save it with inaccurate data
-      Transaction.find(self.id).update!(price: sell_price_destroyed_array[0].exchange_to("PHP"), stock_symbol: stock_symbol)
+        target_investment = Investment.find(self.investment_id)
+        stock_symbol = Stock.find(target_investment.stock_id).symbol
+        # update transaction retroactively with the correct data, as the test form (23/09/2025) can save it with inaccurate data
+        Transaction.find(self.id).update!(price: sell_price_destroyed_array[0].exchange_to("PHP"), stock_symbol: stock_symbol)
 
-      if sell_price_destroyed_array[1] == true
-        Investment.destroy(target_investment.id)
+        if sell_price_destroyed_array[1] == true
+          Investment.destroy(target_investment.id)
+        end
+      else
+        raise WalletError, "Cannot sell shares if not a broker"
       end
     when "withdraw"
-      new_balance = self.wallet.withdraw(self.price)
+      new_balance = self.wallet.subtract(self.price)
 
       # update transaction retroactively with the correct data, as the test form (23/09/2025) can save it with inaccurate data
       Transaction.find(self.id).update!(stock_symbol: nil, investment_id: nil)
@@ -74,7 +78,7 @@ class Transaction < ApplicationRecord
       end
     when "deposit"
       if self.price > 0
-        new_balance = self.wallet.deposit(self.price)
+        new_balance = self.wallet.add(self.price)
 
         # update transaction retroactively with the correct data, as the test form (23/09/2025) can save it with inaccurate data
         Transaction.find(self.id).update!(stock_symbol: nil, investment_id: nil)
