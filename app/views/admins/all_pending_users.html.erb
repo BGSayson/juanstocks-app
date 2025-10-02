@@ -25,17 +25,17 @@
         <td><%= user.user_status %> </td>
         <% if user.confirmed_at == nil   %>
           <td> Account not confirmed </td>
-          <% else %>
-          <td><%= user.confirmed_at %> </td>
-          <% end %>
-          <td><%= button_to image_tag('icons/Search.png', height:21, width:21 ), confirm_user_path(user.id), method: :post, :class=> admin_mini_button%></td>
-        <% if user.user_status == "pending" %>
-        <td><%= button_to "Approve application", approve_application_path(user.id), method: :post, :class=> "cursor-pointer bg-[#8B7DC3] hover:bg-[#FFA62B] px-[0.5rem] py-[0.5rem] rounded-lg text-white" %></td>
-        <% elsif user.user_status == "buyer_broker" %>
-        <td>User is a broker</td>
         <% else %>
-        <td>User has not applied</td>
+          <td><%= user.confirmed_at %> </td>
         <% end %>
+        <% if user.user_status == "pending" %>
+          <td><%= button_to "Approve application", approve_application_path(user.id), method: :post, :class=> "cursor-pointer bg-[#8B7DC3] hover:bg-[#FFA62B] px-[0.5rem] py-[0.5rem] rounded-lg text-white" %></td>
+        <% elsif user.user_status == "buyer_broker" %>
+          <td>User is a broker</td>
+        <% else %>
+          <td>User has not applied</td>
+        <% end %>
+        <td><%= button_to image_tag('icons/Search.png', height:21, width:21 ), user_path(user), method: :get, :class=> admin_mini_button%></td>
       </tr> 
       <% end %>
     </tbody>
