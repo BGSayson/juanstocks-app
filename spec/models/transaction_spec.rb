@@ -60,7 +60,7 @@ RSpec.describe Transaction, type: :model do
       transaction = Transaction.create(transaction_type: "buy", share_amount: 1, price: 10, stock_symbol: test_stock.symbol, investment_id: test_investment.id, wallet: test_wallet)
       expect(test_wallet.balance).to eq(Money.new(2333, 'PHP'))
       expect(transaction.reload.price).to eq(Money.new(17667, 'PHP'))
-      expect(transaction.reload.investment_id).not_to eq(test_investment.id)
+      expect(transaction.reload.investment_id).to eq(test_investment.id)
     end
 
     it "buy failure : cannot buy negative shares" do
