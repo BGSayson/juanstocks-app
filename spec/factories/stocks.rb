@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :stock do
-    id { 1 }
+    # id { 1 }
     currency { "USD" }
     description { "NVIDIA Corp" }
     display_symbol { "https://static2.finnhub.io/file/publicdatany/finnhubimage/stock_logo/NVDA.png" }

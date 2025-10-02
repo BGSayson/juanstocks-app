@@ -48,5 +48,5 @@ def stocks_dataset
   end
 end
 
-stocks_dataset() unless Rails.env.test? 
+stocks_dataset() unless Rails.env.test?
 puts "Stock Data Seeded"

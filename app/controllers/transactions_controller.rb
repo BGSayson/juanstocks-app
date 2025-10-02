@@ -1,6 +1,7 @@
 class TransactionsController < ApplicationController
+  # include "custom_errors"
   before_action :authenticate_user!
-  rescue_from WalletError, with: :redirect
+  rescue_from CustomError::WalletError, with: :redirect
 
   def index
     if current_user_is_buyer_broker

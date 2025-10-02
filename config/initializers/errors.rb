@@ -1,1 +1,1 @@
-require Rails.root.join("lib/custom_errors.rb")
+# require Rails.root.join("lib/custom_errors.rb")
