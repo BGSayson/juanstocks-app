@@ -70,7 +70,7 @@ RSpec.describe Wallet, type: :model do
       test_investment = test_wallet.investments.create(total_share_amount: 1, buying_price: 1, stock_id: test_stock.id)
       expect {
         price_delete_array = test_wallet.remove_investment(test_investment.id, 100, test_stock.symbol)
-      }.to raise_error(an_instance_of(WalletError).and having_attributes(message: "Cannot sell more than total shares"))
+      }.to raise_error(an_instance_of(CustomError::WalletError).and having_attributes(message: "Cannot sell more than total shares"))
     end
   end
 end

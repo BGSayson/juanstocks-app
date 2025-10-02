@@ -72,7 +72,7 @@ class Wallet < ApplicationRecord
     else
       # if total_share_amount is less than the share_amount that user wants to sell
       # raise the error that will roll back the database
-      raise WalletError, "Cannot sell more than total shares"
+      raise CustomError::WalletError, "Cannot sell more than total shares"
     end
 
     # retrieve a specific stock object by searching with stock_symbol and calculate selling price by multiplying the current stock price with the share_amount

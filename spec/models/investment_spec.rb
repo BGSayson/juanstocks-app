@@ -5,7 +5,7 @@ RSpec.describe Investment, type: :model do
 
   let(:test_stock) { create(:stock) }
   let(:test_user) { create(:user) }
-  let(:test_wallet) { create(:wallet, user: test_user) }
+  let(:test_wallet) { test_user.wallet }
   let(:test_investment) { create(:investment, wallet: test_wallet, stock_id: test_stock.id) }
 
   before :all do

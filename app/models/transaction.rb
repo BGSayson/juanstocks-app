@@ -37,9 +37,9 @@ class Transaction < ApplicationRecord
     case self.transaction_type
     when "buy"
       if self.share_amount == nil
-        raise WalletError, "Cannot buy null shares"
+        raise CustomError::WalletError, "Cannot buy null shares"
       elsif self.share_amount < 0
-        raise WalletError, "Cannot buy negative shares"
+        raise CustomError::WalletError, "Cannot buy negative shares"
       end
       # call buy and get the array [investment.id, price, new_balance]
       id_price_array = self.buy(self.share_amount, self.stock_symbol)
@@ -47,7 +47,7 @@ class Transaction < ApplicationRecord
       Transaction.find(self.id).update!(price: id_price_array[1].exchange_to("PHP"), investment_id: id_price_array[0])
       new_balance = id_price_array[2]
       if self.wallet.balance_is_negative || new_balance < 0
-        raise WalletError, "Balance cannot be less than or equal to zero"
+        raise CustomError::WalletError, "Balance cannot be less than or equal to zero"
       end
     when "sell"
       if self.wallet.user.user_status == "buyer_broker"
@@ -64,7 +64,7 @@ class Transaction < ApplicationRecord
           Investment.destroy(target_investment.id)
         end
       else
-        raise WalletError, "Cannot sell shares if not a broker"
+        raise CustomError::WalletError, "Cannot sell shares if not a broker"
       end
     when "withdraw"
       new_balance = self.wallet.subtract(self.price)
@@ -74,7 +74,7 @@ class Transaction < ApplicationRecord
 
       if self.wallet.balance_is_negative || new_balance < 0
         # Important to roll back the database
-        raise WalletError, "Balance cannot be less than or equal to zero"
+        raise CustomError::WalletError, "Balance cannot be less than or equal to zero"
       end
     when "deposit"
       if self.price > 0
@@ -83,7 +83,7 @@ class Transaction < ApplicationRecord
         # update transaction retroactively with the correct data, as the test form (23/09/2025) can save it with inaccurate data
         Transaction.find(self.id).update!(stock_symbol: nil, investment_id: nil)
       else
-        raise WalletError, "Cannot deposit negative amounts"
+        raise CustomError::WalletError, "Cannot deposit negative amounts"
       end
     end
 

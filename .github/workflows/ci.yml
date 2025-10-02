@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [ main, workflow-test ]
 
 jobs:
   scan_ruby:
@@ -91,6 +91,7 @@ jobs:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
           # REDIS_URL: redis://localhost:6379/0
         run: |
+          bin/rails assets:precompile
           bin/rails db:prepare
           bundle exec rspec
 

@@ -67,14 +67,14 @@ RSpec.describe Transaction, type: :model do
       Money.add_rate('USD', 'PHP', 1.0)
       expect {
         transaction = Transaction.create(transaction_type: "buy", share_amount: -1, price: 10, stock_symbol: test_stock.symbol, investment_id: test_investment.id, wallet: test_wallet)
-      } .to raise_error(an_instance_of(WalletError).and having_attributes(message: "Cannot buy negative shares"))
+      } .to raise_error(an_instance_of(CustomError::WalletError).and having_attributes(message: "Cannot buy negative shares"))
     end
 
     it "buy failure : negative final balance" do
       Money.add_rate('USD', 'PHP', 1.0)
       expect {
         transaction = Transaction.create(transaction_type: "buy", share_amount: 2, price: 10, stock_symbol: test_stock.symbol, investment_id: test_investment.id, wallet: test_wallet)
-      } .to raise_error(an_instance_of(WalletError).and having_attributes(message: "Balance cannot be less than or equal to zero"))
+      } .to raise_error(an_instance_of(CustomError::WalletError).and having_attributes(message: "Balance cannot be less than or equal to zero"))
     end
 
     it "successful transaction_type : sell" do
@@ -91,14 +91,14 @@ RSpec.describe Transaction, type: :model do
       test_user.update!(user_status: 'buyer_broker')
       expect {
         transaction = Transaction.create(transaction_type: "sell", share_amount: 10000, price: 10, stock_symbol: test_stock.symbol, investment_id: test_investment.id, wallet: test_wallet)
-      } .to raise_error(an_instance_of(WalletError).and having_attributes(message: "Cannot sell more than total shares"))
+      } .to raise_error(an_instance_of(CustomError::WalletError).and having_attributes(message: "Cannot sell more than total shares"))
     end
 
     it "sell failure : cannot sell as buyer only" do
       Money.add_rate('USD', 'PHP', 1.0)
       expect {
         transaction = Transaction.create(transaction_type: "sell", share_amount: 10000, price: 10, stock_symbol: test_stock.symbol, investment_id: test_investment.id, wallet: test_wallet)
-      } .to raise_error(an_instance_of(WalletError).and having_attributes(message: "Cannot sell shares if not a broker"))
+      } .to raise_error(an_instance_of(CustomError::WalletError).and having_attributes(message: "Cannot sell shares if not a broker"))
     end
 
     it "successful transaction_type : withdraw" do
@@ -111,7 +111,7 @@ RSpec.describe Transaction, type: :model do
     it "withdraw failure : negative balance" do
       expect {
         transaction = Transaction.create(transaction_type: "withdraw", share_amount: 1, price: 10000, stock_symbol: test_stock.symbol, investment_id: test_investment.id, wallet: test_wallet)
-      } .to raise_error(an_instance_of(WalletError).and having_attributes(message: "Balance cannot be less than or equal to zero"))
+      } .to raise_error(an_instance_of(CustomError::WalletError).and having_attributes(message: "Balance cannot be less than or equal to zero"))
     end
 
     it "successful transaction_type : deposit" do
@@ -124,7 +124,7 @@ RSpec.describe Transaction, type: :model do
     it "deposit failure : negative deposit" do
       expect {
         transaction = Transaction.create(transaction_type: "deposit", share_amount: 1, price: -10, stock_symbol: test_stock.symbol, investment_id: test_investment.id, wallet: test_wallet)
-      } .to raise_error(an_instance_of(WalletError).and having_attributes(message: "Cannot deposit negative amounts"))
+      } .to raise_error(an_instance_of(CustomError::WalletError).and having_attributes(message: "Cannot deposit negative amounts"))
     end
   end
 end
