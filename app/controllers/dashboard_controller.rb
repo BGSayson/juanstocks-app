@@ -11,6 +11,9 @@ class DashboardController < ApplicationController
     @top_stocks = Stock.top_stocks
     @top_investments = current_user.wallet.investments.first(5)
     @recent_txs = current_user.wallet.transactions.recent_txs.first(8)
+    if(current_user.user_role == 'admin')
+      redirect_to admins_path 
+    end
   end
 
   def verify_user

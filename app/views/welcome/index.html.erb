@@ -2,11 +2,14 @@
   <div class="<%= welcome_flex_row_container_top%> sticky top-0 right-0 left-0">
     <%= image_tag('icons/JuanStocksIcon.png', height:40, width:40) %>
     <% if user_signed_in? %>
-    <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: welcome_primary_button %>
+    <div class="<%= welcome_flex_row_container %>">
+      <%= button_to "Dashboard", dashboard_path, method: :get, class: welcome_secondary_button_purple %>
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: welcome_primary_button %>
+    </div>
     <% else %>
     <div class="<%= welcome_flex_row_container %>">
-    <%= button_to "Sign Up", new_user_registration_path, method: :get, class: welcome_secondary_button_purple %>
-    <%= button_to "Log In", new_user_session_path, method: :get, class: welcome_primary_button %>
+      <%= button_to "Sign Up", new_user_registration_path, method: :get, class: welcome_secondary_button_purple %>
+      <%= button_to "Log In", new_user_session_path, method: :get, class: welcome_primary_button %>
     </div>
     <% end %>
   </div>
