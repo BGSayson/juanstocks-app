@@ -17,7 +17,7 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-gem "finnhub_ruby", "~> 2.0", ">= 2.0.1"
+gem "finnhub_ruby", "~> 2.0"
 gem "money-rails"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
