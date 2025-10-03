@@ -6,8 +6,8 @@
     <td class="m-2 p-2 "><%= stock.current_price.format %> </td>
     <td class="m-2 p-2 "><%= stock.change %> </td>
     <td class="m-2 p-2 "><%= stock.percent_change %> </td>
-    <td class="m-2 p-2 "><%= stock.high_price_of_the_day_cents %> </td>
-    <td class="m-2 p-2 "><%= stock.low_price_of_the_day_cents %> </td>
+    <td class="m-2 p-2 "><%= stock.high_price_of_the_day.format %> </td>
+    <td class="m-2 p-2 "><%= stock.low_price_of_the_day.format %> </td>
     <td class="m-2 p-2 "><%= stock.current_price_currency %> </td>
     <td class="m-2 p-2"><%= link_to "Stock Info", stock_path(stock.id), class: "text-[#8B7DC3] hover:underline"  %> </td>
   </tr>

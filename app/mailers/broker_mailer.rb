@@ -1,5 +1,5 @@
 class BrokerMailer < ApplicationMailer
-  default from: "from@juan_tamad.com"
+  # default from: "from@juan_tamad.com"
 
   def broker_approved
     @user = params[:user]
