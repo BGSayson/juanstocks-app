@@ -82,3 +82,4 @@ gem "dotenv-rails"
 gem "httparty"
 gem "tailwindcss-rails"
 gem "tailwindcss-ruby"
+gem 'postmark-rails'

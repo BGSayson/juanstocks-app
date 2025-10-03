@@ -11,6 +11,10 @@ module JuanstocksApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
+    # POSTMARK FOR MAILER
+    config.action_mailer.delivery_method = :postmark
+    config.action_mailer.postmark_settings = { :api_token => ENV["POSTMARK_API_KEY"] }
+
     # config.active_job.queue_adapter = :sidekiq
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
