@@ -49,15 +49,16 @@ def stocks_dataset
 end
 def admin_seed
   puts "Seeding admin account..."
-  admin = User.create(
+  admin = User.new(
     email: ENV["ADMIN_EMAIL"],
     first_name: ENV["ADMIN_FIRST_NAME"],
     last_name: ENV["ADMIN_LAST_NAME"],
     password: ENV["ADMIN_PASSWORD"],
     user_role: 'admin',
-    user_status: 'buyer_broker'
+    user_status: 'buyer_broker',
+    confirmed_at: Time.now
   )
-  admin.skip_confirmation!
+  puts admin.confirmed_at
   if admin.save
     puts "Admin data seeded"
   else
