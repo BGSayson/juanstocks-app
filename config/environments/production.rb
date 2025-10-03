@@ -62,17 +62,16 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "juanstocks-app.onrender.com", protocol: "https" }
 
 # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
-config.action_mailer.delivery_method = :smtp
-config.action_mailer.smtp_settings = {
-  address:         "smtp.gmail.com",
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+  address:         "smtp.postmarkapp.com",
   port:            587,
-  domain:          "gmail.com",
-  user_name:       ENV["GMAIL"],
-  password:        ENV["APP_PASSWORD"],
+  domain:          "juanstocks-app.onrender.com",
+  user_name:       ENV["POSTMARK_API_KEY"],
+  password:        ENV["POSTMARK_API_KEY"],
   authentication:  "plain",
-  enable_starttls: true,
-  open_timeout:    5,
-  read_timeout:    5 }
+  enable_starttls: true
+  }
 
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
