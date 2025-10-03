@@ -61,6 +61,7 @@ def admin_seed
   if admin.save
     puts "Admin data seeded"
   else
+    puts admin.errors.messages
     puts "Admin data not seeded"
   end
 end
