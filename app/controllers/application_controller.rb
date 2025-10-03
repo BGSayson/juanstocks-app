@@ -35,6 +35,10 @@ class ApplicationController < ActionController::Base
     root_path # your path
   end
 
+  def after_update_path_for(resource)
+    dashboard_path
+  end
+
   # Active Jobs
   OpenexchangerateJob.perform_later
   # FinnhubJob.perform_later
