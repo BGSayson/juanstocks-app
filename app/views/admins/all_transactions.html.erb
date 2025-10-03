@@ -15,7 +15,7 @@
     </thead>
     <tbody>
       <% @transactions.each do |tx| %>
-      <% break if tx.user == nil%>
+      <% break if tx.wallet.user == nil%>
         <tr class="hover:bg-[#8B7DC324]">
           <td><%= tx.id %> </td>
           <td><%= tx.wallet.user.email %> </td>
