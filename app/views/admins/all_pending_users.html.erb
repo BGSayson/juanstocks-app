@@ -30,6 +30,7 @@
         <% end %>
         <% if user.user_status == "pending" %>
           <td><%= button_to "Approve application", approve_application_path(user.id), method: :post, :class=> "cursor-pointer bg-[#8B7DC3] hover:bg-[#FFA62B] px-[0.5rem] py-[0.5rem] rounded-lg text-white" %></td>
+          <td><%= button_to "Deny application", deny_application_path(user.id), method: :post, :class=> "cursor-pointer bg-[hsl(0,74%,57%)] hover:bg-[#FFA62B] px-[0.5rem] py-[0.5rem] rounded-lg text-white" %></td>
         <% elsif user.user_status == "buyer_broker" %>
           <td>User is a broker</td>
         <% else %>
