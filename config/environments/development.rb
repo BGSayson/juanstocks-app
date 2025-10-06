@@ -52,16 +52,20 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "juanstocks-app.onrender.com", protocol: "https" }
 
 # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-  address:         "smtp.postmarkapp.com",
-  port:            587,
-  domain:          "juanstocks-app.onrender.com",
-  user_name:       ENV["POSTMARK_API_KEY"],
-  password:        ENV["POSTMARK_API_KEY"],
-  authentication:  "plain",
-  enable_starttls: true
-  }
+  # config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
+
+  # config.action_mailer.smtp_settings = {
+  # address:         "smtp.postmarkapp.com",
+  # port:            587,
+  # domain:          "juanstocks-app.onrender.com",
+  # user_name:       ENV["POSTMARK_API_KEY"],
+  # password:        ENV["POSTMARK_API_KEY"],
+  # authentication:  "plain",
+  # enable_starttls: true
+  # }
+
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

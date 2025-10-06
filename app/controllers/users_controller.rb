@@ -42,7 +42,7 @@ class UsersController < ApplicationController
     end
   end
 
-    def approve_application
+  def approve_application
     @user = User.find(params[:id])
 
     if @user.user_status == "pending"
@@ -52,6 +52,27 @@ class UsersController < ApplicationController
         flash[:notice] = "User is now a broker!"
         puts "user status after @user.update: #{@user.user_status}"
         BrokerMailer.with(user: @user).broker_approved.deliver_now
+        redirect_to all_pending_users_path
+        nil
+      else
+        flash[:alert] = "Error occurred"
+        render :all_pending_users
+      end
+    else
+      flash[:notice] = "Error occurred"
+    end
+  end
+
+  def deny_application
+    @user = User.find(params[:id])
+
+    if @user.user_status == "pending"
+        @user.user_status = "buyer_only"
+
+      if @user.save
+        flash[:notice] = "User's application was denied"
+        puts "user status after @user.update: #{@user.user_status}"
+        BrokerMailer.with(user: @user).broker_denied.deliver_now
         redirect_to all_pending_users_path
         nil
       else
